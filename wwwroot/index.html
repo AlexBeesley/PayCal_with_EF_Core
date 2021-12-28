@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<script src="js/site.js" asp-append-version="true"></script>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>PayCal API</title>
+        <link rel="stylesheet" href="css/site.css" />
+    </head>
+    <body>
+        <h1>PayCal API Demonstration</h1>
+        <h2>by David Beesley @ TPR</h2>
+        <div id="GetEmployees">
+            <button onclick="getEmployees()">Get Employees</button>
+            <p id="employeesOutput"></p>
+        </div>
+
+        <div id="PayCalculator">
+            <input type="text" id="employeeID" name="employeeID" placeholder="Employee ID"><br><br>
+            <button onclick="payCalculator()">Pay Calculator</button>
+            <p id="payCalculatorOutput"></p>
+        </div>
+
+        <div id="AddEmployee">
+            <div class="dropdown">
+                <button onclick="dropdown()" class="dropbtn">Select Employment Type</button>
+                <div id="employmentTypeDropdown" class="dropdown-content">
+                  <a onclick="AddEmployee_perm()" id="perm">Permanent</a>
+                  <a onclick="AddEmployee_temp()"id="temp">Temporary</a>
+                </div>
+            </div>
+            <input type="text" id="fname" name="fname" placeholder="First Name" visible="false"><br><br>
+            <input type="text" id="lname" name="lname" placeholder="Last Name" visible="false"><br><br>
+            <input type="text" id="salary" name="salary" placeholder="Salary" visible="false"><br><br>
+            <input type="text" id="bonus" name="bonus" placeholder="Bonus" visible="false"><br><br>
+            <input type="text" id="dayrate" name="dayrate" placeholder="Day Rate" visible="false"><br><br>
+            <input type="text" id="weeksworked" name="weeksworked" placeholder="Weeks Worked" visible="false"><br><br>
+            <button onclick="addEmployee()">Add Employee</button>
+        </div>
+
+        <div id="DeleteEmployee">
+            <button onclick="deleteEmployee()">Delete Employee</button>
+        </div>
+    </body>
+</html>
