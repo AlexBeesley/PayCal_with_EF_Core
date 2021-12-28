@@ -21,21 +21,29 @@
         </div>
 
         <div id="AddEmployee">
-            <div class="dropdown">
-                <button onclick="dropdown()" class="dropbtn">Select Employment Type</button>
-                <div id="employmentTypeDropdown" class="dropdown-content">
-                  <a onclick="AddEmployee_perm()" id="perm">Permanent</a>
-                  <a onclick="AddEmployee_temp()"id="temp">Temporary</a>
+            <button id="addEmployee_btn" onclick="addEmployee_getinfo()">Add Employee</button>
+            <div id="fields" style="display: none">
+                <p>Please select employment type:</p>
+                <form id="is_permForm">
+                      <input type="radio" id="perm" name="is_perm" onchange="addEmployee_perm()" value=true>
+                      <label for="perm">Permanent</label><br>
+                      <input type="radio" id="temp" name="is_perm" onchange="addEmployee_temp()" value=false>
+                      <label for="temp">Temporary</label><br><br>
+                </form>
+                
+                <input type="text" id="fname" name="fname" placeholder="First Name"><br><br>
+                <input type="text" id="lname" name="lname" placeholder="Last Name"><br><br>
+                <div id="perm_fields" style="display: none">
+                    <input type="text" id="salary" name="salary" placeholder="Salary"><br><br>
+                    <input type="text" id="bonus" name="bonus" placeholder="Bonus"><br><br>
                 </div>
+                <div id="temp_fields" style="display: none">
+                    <input type="text" id="dayrate" name="dayrate" placeholder="Day Rate"><br><br>
+                    <input type="text" id="weeksworked" name="weeksworked" placeholder="Weeks Worked"><br><br>        
+                </div>
+                <button id="submitEmployee_btn" onclick="submitEmployee()">Submit</button>
             </div>
-            <input type="text" id="fname" name="fname" placeholder="First Name" visible="false"><br><br>
-            <input type="text" id="lname" name="lname" placeholder="Last Name" visible="false"><br><br>
-            <input type="text" id="salary" name="salary" placeholder="Salary" visible="false"><br><br>
-            <input type="text" id="bonus" name="bonus" placeholder="Bonus" visible="false"><br><br>
-            <input type="text" id="dayrate" name="dayrate" placeholder="Day Rate" visible="false"><br><br>
-            <input type="text" id="weeksworked" name="weeksworked" placeholder="Weeks Worked" visible="false"><br><br>
-            <button onclick="addEmployee()">Add Employee</button>
-        </div>
+        </div><br>
 
         <div id="DeleteEmployee">
             <button onclick="deleteEmployee()">Delete Employee</button>
