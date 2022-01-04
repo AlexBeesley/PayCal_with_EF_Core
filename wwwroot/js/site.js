@@ -3,17 +3,29 @@ function getEmployees() {
     .then(data => console.log(data.text().then(function (text) {
       document.getElementById("employeesOutput").innerHTML = text;
     })));
+  document.getElementById("GetEmployees_btn").innerText = "Refresh";
 }
 
-function getPayCalID(){
+function getPayCalID4cal(){
   x = document.getElementById("employeeID").value;
 }
 
+function getPayCalID4del(){
+  y = document.getElementById("employeeID4delete").value;
+}
+
 function payCalculator() {
+  document.getElementById("employeeID").style.display = "block";
+  document.getElementById("payCalculator_btn").style.display = "none";
+  document.getElementById("Calculator_btn").style.display = "block";
+}
+
+function Calculator() {
+  getPayCalID4cal();
   fetch(`https://localhost:7229/PayCalculator?ID=${x}`)
-    .then(data => console.log(data.text().then(function (text) {
-      document.getElementById("payCalculatorOutput").innerHTML = text;
-    })));
+  .then(data => console.log(data.text().then(function (text) {
+    document.getElementById("payCalculatorOutput").innerHTML = text;
+  })));
 }
 
 function addEmployee_getinfo() {
@@ -52,10 +64,23 @@ function submitEmployee() {
         bonus_or_weeksworked = document.getElementById("weeksworked").value;
       }
       console.log(isperm, fname, lname, salary_or_dayrate, bonus_or_weeksworked);
-      fetch(`https://localhost:7229/AddEmployee?isperm=${isperm}&fname=${fname}&lname=${lname}salary_or_dayrate=${salary_or_dayrate}&bonus_or_weeksworked=${bonus_or_weeksworked}`, {
-      method: 'PUT'})
-        .then(data => console.log(data()));
+      fetch(`https://localhost:7229/AddEmployee?isperm=${isperm}&fname=${fname}&lname=${lname}&salary_or_dayrate=${salary_or_dayrate}&bonus_or_weeksworked=${bonus_or_weeksworked}`, {
+      method: 'PUT'});
       break;
     }
   }
+}
+
+function deleteEmployeeBtn() {
+  document.getElementById("employeeID4delete").style.display = "block";
+  document.getElementById("deleteEmployee_btn").style.display = "none";
+  document.getElementById("Delete_btn").style.display = "block";
+}
+
+function deleteEmployee(){
+getPayCalID4del();
+fetch(`https://localhost:7229/DeleteEmployee?ID=${y}`, {
+  method: 'PUT'
+});
+console.log("Deleted employee: " + y);
 }

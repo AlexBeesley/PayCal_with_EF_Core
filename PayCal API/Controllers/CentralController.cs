@@ -29,11 +29,11 @@ namespace PayCal_API.Controllers
         {
             try
             {
-                return ($"Employee Name:  {perm.Read(ID).FName} {perm.Read(ID).LName}\nEmployment Type:  Permanent\nAnnual Pay after Tax:  £{cal.CalculateEmployeePay(ID)}");
+                return ($"Employee Name:  {perm.Read(ID).FName} {perm.Read(ID).LName}\nEmployment Type:  Permanent\nAnnual Pay after Tax:  £{cal.CalculateEmployeePay(ID).Item2}");
             }
             catch
             {
-                return ($"Employee Name:  {temp.Read(ID).FName} {temp.Read(ID).LName}\nEmployment Type:  Temporary\nAnnual Pay after Tax:  £{cal.CalculateEmployeePay(ID)}");
+                return ($"Employee Name:  {temp.Read(ID).FName} {temp.Read(ID).LName}\nEmployment Type:  Temporary\nAnnual Pay after Tax:  £{cal.CalculateEmployeePay(ID).Item2}");
             }
         }
 
