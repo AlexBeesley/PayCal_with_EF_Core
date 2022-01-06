@@ -19,7 +19,7 @@ namespace PayCal_API.Controllers
         [HttpGet("Employees")]
         public IActionResult GetTempEmployees()
         {
-            return Ok($"{(string.Concat(temp.ReadAll()))}");
+            return Ok(temp.ReadAll());
         }
 
         [HttpGet("Employee/{ID}")]
@@ -27,7 +27,7 @@ namespace PayCal_API.Controllers
         {
             try
             {
-                return Ok(string.Concat(temp.Read(ID)));
+                return Ok(temp.Read(ID));
             }
             catch { return NotFound(); }
         }
@@ -37,7 +37,7 @@ namespace PayCal_API.Controllers
         {
             try
             {
-                return Ok($"Employee with ID: {temp.Read(ID).EmployeeID} is Temporary");
+                return Ok(temp.Read(ID).EmployeeID);
             }
             catch { return NotFound(); }
         }
@@ -47,7 +47,7 @@ namespace PayCal_API.Controllers
         {
             try
             {
-                return Ok($"{temp.Read(ID).FName} {temp.Read(ID).LName}");
+                return Ok(temp.Read(ID).FName + temp.Read(ID).LName);
             }            
             catch { return NotFound(); }
         }

@@ -19,7 +19,7 @@ namespace PayCal_API.Controllers
         [HttpGet("Employees")]
         public IActionResult GetAllPermEmployees()
         {
-            return Ok($"{(string.Concat(perm.ReadAll()))}");
+            return Ok(perm.ReadAll());
         }
 
         [HttpGet("Employee/{ID}")]
@@ -27,7 +27,7 @@ namespace PayCal_API.Controllers
         {
             try
             {
-                return Ok(string.Concat(perm.Read(ID)));
+                return Ok(perm.Read(ID));
             }
             catch { return NotFound(); }
         }
@@ -37,7 +37,7 @@ namespace PayCal_API.Controllers
         {
             try
             {
-                return Ok($"Employee with ID: {perm.Read(ID).EmployeeID} is Permanent");
+                return Ok(perm.Read(ID).EmployeeID);
             }
             catch { return NotFound(); }
         }
@@ -47,7 +47,7 @@ namespace PayCal_API.Controllers
         {
             try
             {
-                return Ok($"{perm.Read(ID).FName} {perm.Read(ID).LName}");
+                return Ok(perm.Read(ID).FName + perm.Read(ID).LName);
             }
             catch { return NotFound(); }
         }
