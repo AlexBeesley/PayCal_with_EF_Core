@@ -3,90 +3,113 @@ using PayCal;
 
 namespace PayCal_API.Controllers
 {
+    [ApiController]
+    [Route("~/Permanent")]
     public class PermEmployeeController : Controller
     {
         private PermEmployeeRepository perm;
         private Calculator cal;
 
-        public PermEmployeeController(IRepository<PermEmployeeData> Perm)
+        public PermEmployeeController([FromServices] IRepository<PermEmployeeData> Perm)
         {
             perm = (PermEmployeeRepository)Perm;
             cal = new Calculator(perm, null);
         }
 
-        [HttpGet("~/Permanent/All-Employees")]
-        public string GetAllPermEmployees()
+        [HttpGet("Employees")]
+        public IActionResult GetAllPermEmployees()
         {
-            return ($"{(string.Concat(perm.ReadAll()))}");
+            return Ok($"{(string.Concat(perm.ReadAll()))}");
         }
 
-        [HttpGet("~/Permanent/Employee")]
-        public string GetPermEmployee(int ID)
-        {
-            return (string.Concat(perm.Read(ID)));
-        }
-
-        [HttpGet("~/Permanent/Employee/ID")]
-        public int GetPermEmployeeID(int ID)
-        {
-            return (perm.Read(ID).EmployeeID);
-        }
-
-        [HttpGet("~/Permanent/Employee/Employment-Type")]
-        public string GetPermEmploymentType(int ID)
-        {
-            return ($"Employee with ID: {perm.Read(ID).EmployeeID} is Permanent");
-        }
-
-        [HttpGet("~/Permanent/Employee/Full-Name")]
-        public string GetPermEmployeeFullName(int ID)
-        {
-            return ($"{perm.Read(ID).FName} {perm.Read(ID).LName}");
-        }
-
-        [HttpGet("~/Permanent/Employee/Salary")]
-        public int? GetPermSalary(int ID)
-        {
-            return (perm.Read(ID).Salaryint);
-        }
-
-        [HttpGet("~/Permanent/Employee/Bonus")]
-        public int? GetPermBonus(int ID)
-        {
-            return (perm.Read(ID).Bonusint);
-        }
-
-        [HttpPut("~/Permanent/NewEmployee")]
-        public bool PutNewPermEmployee(string fname, string lname, int salary, int bonus)
+        [HttpGet("Employee/{ID}")]
+        public IActionResult GetPermEmployeeByID(int ID)
         {
             try
             {
-                perm.Create(fname, lname, salary, bonus);
-                return true;
+                return Ok(string.Concat(perm.Read(ID)));
             }
-            catch
+            catch { return NotFound(); }
+        }
+
+        [HttpGet("Employee/{ID}/Employment-Type")]
+        public IActionResult GetPermEmploymentType(int ID)
+        {
+            try
             {
-                return false;
+                return Ok($"Employee with ID: {perm.Read(ID).EmployeeID} is Permanent");
             }
+            catch { return NotFound(); }
         }
 
-        [HttpPut("~/Permanent/Delete-Employee")]
-        public bool DeletePermEmployee(int ID)
+        [HttpGet("Employee/{ID}/Full-Name")]
+        public IActionResult GetPermEmployeeFullName(int ID)
         {
-            perm.Delete(ID);
-            return true;
+            try
+            {
+                return Ok($"{perm.Read(ID).FName} {perm.Read(ID).LName}");
+            }
+            catch { return NotFound(); }
         }
 
-        [HttpGet("~/Permanent/Employee/Gross-Income")]
-        public double GetPermGrossIncome(int ID)
+        [HttpGet("Employee/{ID}/Salary")]
+        public IActionResult GetPermSalary(int ID)
         {
-            return (cal.CalculateEmployeePay(ID).Item1);
+            try
+            {
+                return Ok(perm.Read(ID).Salaryint);
+            }
+            catch { return NotFound(); }
         }
 
-        [HttpGet("~/Permanent/Employee/Income-After-Tax")]
-        public double GetPermIncomeAfterTax(int ID)
+        [HttpGet("Employee/{ID}/WeeksWorked")]
+        public IActionResult GetPermBonus(int ID)
         {
-            return (cal.CalculateEmployeePay(ID).Item2);
+            try
+            {
+                return Ok(perm.Read(ID).Bonusint);
+            }
+            catch { return NotFound(); }
+        }
+
+        [HttpGet("Employee/{ID}/Gross-Income")]
+        public IActionResult GetPermGrossIncome(int ID)
+        {
+            try
+            {
+                return Ok(cal.CalculateEmployeePay(ID).Item1);
+            }
+            catch { return NotFound(); }
+        }
+
+        [HttpGet("Employee/{ID}/Income-After-Tax")]
+        public IActionResult GetPermIncomeAfterTax(int ID)
+        {
+            try
+            {
+                return Ok(cal.CalculateEmployeePay(ID).Item2);
+            }
+            catch { return NotFound(); }
+        }
+
+        [HttpPost("New-Employee")]
+        public IActionResult PutNewPermEmployee(string fname, string lname, int salary, int bonus)
+        {
+            try
+            {
+                return Ok(perm.Create(fname, lname, salary, bonus));
+            }
+            catch { return BadRequest(); }
+        }
+
+        [HttpDelete("Delete-Employee/{ID}")]
+        public IActionResult DeletePermEmployee(int ID)
+        {
+            try
+            {
+                return Ok(perm.Delete(ID));
+            }
+            catch { return BadRequest(); }
         }
     }
 }
