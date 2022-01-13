@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayCal API", "PayCal API\PayCal API.csproj", "{CE04295F-14CC-4100-9133-020BC4EE6C5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal API", "PayCal API\PayCal API.csproj", "{CE04295F-14CC-4100-9133-020BC4EE6C5A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal", "..\PayCal\PayCal\PayCal.csproj", "{A995A623-45D0-48AA-9CA0-BF7380594DC3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal - Tests", "..\PayCal\PayCal - Tests\PayCal - Tests.csproj", "{8441060E-AD54-4490-A437-B1F655265EFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayCal Console", "PayCal Console\PayCal Console.csproj", "{A1C826FE-D417-4691-9B04-EAB682BD761D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{A995A623-45D0-48AA-9CA0-BF7380594DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A995A623-45D0-48AA-9CA0-BF7380594DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A995A623-45D0-48AA-9CA0-BF7380594DC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8441060E-AD54-4490-A437-B1F655265EFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8441060E-AD54-4490-A437-B1F655265EFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8441060E-AD54-4490-A437-B1F655265EFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8441060E-AD54-4490-A437-B1F655265EFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1C826FE-D417-4691-9B04-EAB682BD761D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1C826FE-D417-4691-9B04-EAB682BD761D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1C826FE-D417-4691-9B04-EAB682BD761D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1C826FE-D417-4691-9B04-EAB682BD761D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
