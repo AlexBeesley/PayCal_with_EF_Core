@@ -9,23 +9,23 @@ namespace PayCal_API.Controllers
     [Route("~/Temporary")]
     public class TempEmployeeController : Controller
     {
-        private readonly IRepository<TempEmployeeData> temp;
+        private readonly IRepository<TempEmployeeData> _temp;
 
-        public TempEmployeeController(IRepository<TempEmployeeData> Temp)
+        public TempEmployeeController(IRepository<TempEmployeeData> temp)
         {
-            temp = Temp;
+            _temp = temp;
         }
 
         [HttpGet()]
         public IActionResult GetTempEmployees()
         {
-            return Ok(temp.ReadAll());
+            return Ok(_temp.ReadAll());
         }
 
         [HttpGet("{ID}")]
         public IActionResult GetTempEmployeeByID(int ID)
         {
-            var read = temp.Read(ID);
+            var read = _temp.Read(ID);
             if (read != null)
             {
                 return Ok(read);
@@ -36,19 +36,19 @@ namespace PayCal_API.Controllers
         [HttpPut("{ID}")]
         public IActionResult UpdatePermEmployee(int ID, string fname, string lname, int? DayRate, int? WeeksWorked)
         {
-            return Ok(temp.Update(ID, fname, lname, DayRate, WeeksWorked));
+            return Ok(_temp.Update(ID, fname, lname, DayRate, WeeksWorked));
         }
 
         [HttpPost()]
         public IActionResult PutNewTempEmployee(string fname, string lname, int dayrate, int weeksworked)
         {
-            return Ok(temp.Create(fname, lname, dayrate, weeksworked));
+            return Ok(_temp.Create(fname, lname, dayrate, weeksworked));
         }
 
         [HttpDelete("{ID}")]
         public IActionResult DeleteTempEmployee(int ID)
         {
-            var delete = temp.Delete(ID);
+            var delete = _temp.Delete(ID);
             if (delete)
             {
                 return Ok(delete);
