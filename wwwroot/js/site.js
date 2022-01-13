@@ -1,16 +1,26 @@
 function getEmployees() {
-  fetch('https://localhost:7229/GetEmployees')
-    .then(data => console.log(data.text().then(function (text) {
-      document.getElementById("employeesOutput").innerHTML = text;
-    })));
+  fetch('https://localhost:7229/Permanent/Employees')
+    .then(result => result.json())
+    .then(data => {
+      document.getElementById("permEmployeesOutput").innerHTML = JSON.stringify(data);
+    })
+
+  fetch('https://localhost:7229/Temporary/Employees')
+    .then(result => result.json())
+    .then(data => {
+      document.getElementById("tempEmployeesOutput").innerHTML = JSON.stringify(data);
+    })
+
+  document.getElementById("heading1").style.display = "block";
+  document.getElementById("heading2").style.display = "block";
   document.getElementById("GetEmployees_btn").innerText = "Refresh";
 }
 
-function getPayCalID4cal(){
+function getPayCalID4cal() {
   x = document.getElementById("employeeID").value;
 }
 
-function getPayCalID4del(){
+function getPayCalID4del() {
   y = document.getElementById("employeeID4delete").value;
 }
 
