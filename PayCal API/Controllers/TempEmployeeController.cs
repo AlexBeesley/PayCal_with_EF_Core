@@ -16,13 +16,13 @@ namespace PayCal_API.Controllers
             cal = new Calculator(null, temp);
         }
 
-        [HttpGet("Employees")]
+        [HttpGet()]
         public IActionResult GetTempEmployees()
         {
             return Ok(temp.ReadAll());
         }
 
-        [HttpGet("Employee/{ID}")]
+        [HttpGet("{ID}")]
         public IActionResult GetTempEmployeeByID(int ID)
         {
             try
@@ -32,67 +32,13 @@ namespace PayCal_API.Controllers
             catch { return NotFound(); }
         }
 
-        [HttpGet("Employee/{ID}/Employment-Type")]
-        public IActionResult GetTempEmploymentType(int ID)
-        {
-            try
-            {
-                return Ok(temp.Read(ID).EmployeeID);
-            }
-            catch { return NotFound(); }
-        }
+        //[HttpPut("{ID}")]
+        //public IActionResult UpdateTempEmployee(int ID)
+        //{
+        //    add code
+        //}
 
-        [HttpGet("Employee/{ID}/Full-Name")]
-        public IActionResult GetTempEmployeeFullName(int ID)
-        {
-            try
-            {
-                return Ok(temp.Read(ID).FName + temp.Read(ID).LName);
-            }            
-            catch { return NotFound(); }
-        }
-
-        [HttpGet("Employee/{ID}/Day-Rate")]
-        public IActionResult GetTempDayRate(int ID)
-        {
-            try
-            {
-                return Ok(temp.Read(ID).DayRateint);
-            }
-            catch { return NotFound(); }
-        }
-
-        [HttpGet("Employee/{ID}/WeeksWorked")]
-        public IActionResult GetTempWeeksWorked(int ID)
-        {
-            try
-            {
-                return Ok(temp.Read(ID).WeeksWorkedint);
-            }
-            catch { return NotFound(); }
-        }
-
-        [HttpGet("Employee/{ID}/Gross-Income")]
-        public IActionResult GetTempGrossIncome(int ID)
-        {
-            try
-            {
-                return Ok(cal.CalculateEmployeePay(ID).Item1);
-            }
-            catch { return NotFound(); }
-        }
-
-        [HttpGet("Employee/{ID}/Income-After-Tax")]
-        public IActionResult GetTempIncomeAfterTax(int ID)
-        {
-            try
-            {
-                return Ok(cal.CalculateEmployeePay(ID).Item2);
-            }
-            catch { return NotFound(); }
-        }
-
-        [HttpPost("New-Employee")]
+        [HttpPost()]
         public IActionResult PutNewTempEmployee(string fname, string lname, int dayrate, int weeksworked)
         {
             try
@@ -102,7 +48,7 @@ namespace PayCal_API.Controllers
             catch { return BadRequest(); }
         }
 
-        [HttpDelete("Delete-Employee/{ID}")]
+        [HttpDelete("{ID}")]
         public IActionResult DeleteTempEmployee(int ID)
         {
             try
