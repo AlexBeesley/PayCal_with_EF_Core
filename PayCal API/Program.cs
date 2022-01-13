@@ -1,4 +1,6 @@
-using PayCal;
+using PayCal.Models;
+using PayCal.Repositories;
+using PayCal.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";

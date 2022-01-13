@@ -1,4 +1,6 @@
-﻿using PayCal;
+﻿using PayCal.Models;
+using PayCal.Repositories;
+using PayCal.Services;
 
 namespace PayCal_Console
 {
