@@ -7,13 +7,11 @@ namespace PayCal_API.Controllers
     [Route("~/Temporary")]
     public class TempEmployeeController : Controller
     {
-        private TempEmployeeRepository temp;
-        private Calculator cal;
+        private readonly IRepository<TempEmployeeData> temp;
 
-        public TempEmployeeController([FromServices] IRepository<TempEmployeeData> Temp)
+        public TempEmployeeController(IRepository<TempEmployeeData> Temp)
         {
-            temp = (TempEmployeeRepository)Temp;
-            cal = new Calculator(null, temp);
+            temp = Temp;
         }
 
         [HttpGet()]
@@ -25,37 +23,35 @@ namespace PayCal_API.Controllers
         [HttpGet("{ID}")]
         public IActionResult GetTempEmployeeByID(int ID)
         {
-            try
+            var read = temp.Read(ID);
+            if (read != null)
             {
-                return Ok(temp.Read(ID));
+                return Ok(read);
             }
-            catch { return NotFound(); }
+            else { return NotFound(); }
         }
 
-        //[HttpPut("{ID}")]
-        //public IActionResult UpdateTempEmployee(int ID)
-        //{
-        //    add code
-        //}
+        [HttpPut("{ID}")]
+        public IActionResult UpdatePermEmployee(int ID, string fname, string lname, int? DayRate, int? WeeksWorked)
+        {
+            return Ok(temp.Update(ID, fname, lname, DayRate, WeeksWorked));
+        }
 
         [HttpPost()]
         public IActionResult PutNewTempEmployee(string fname, string lname, int dayrate, int weeksworked)
         {
-            try
-            {
-                return Ok(temp.Create(fname, lname, dayrate, weeksworked));
-            }
-            catch { return BadRequest(); }
+            return Ok(temp.Create(fname, lname, dayrate, weeksworked));
         }
 
         [HttpDelete("{ID}")]
         public IActionResult DeleteTempEmployee(int ID)
         {
-            try
+            var delete = temp.Delete(ID);
+            if (delete)
             {
-                return Ok(temp.Delete(ID));
+                return Ok(delete);
             }
-            catch { return BadRequest(); }
+            else { return BadRequest(); }
         }
     }
 }

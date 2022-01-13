@@ -7,13 +7,11 @@ namespace PayCal_API.Controllers
     [Route("~/Permanent")]
     public class PermEmployeeController : Controller
     {
-        private PermEmployeeRepository perm;
-        private Calculator cal;
+        private readonly IRepository<PermEmployeeData> perm;
 
-        public PermEmployeeController([FromServices] IRepository<PermEmployeeData> Perm)
+        public PermEmployeeController(IRepository<PermEmployeeData> Perm)
         {
-            perm = (PermEmployeeRepository)Perm;
-            cal = new Calculator(perm, null);
+            perm = Perm;
         }
 
         [HttpGet()]
@@ -25,37 +23,35 @@ namespace PayCal_API.Controllers
         [HttpGet("{ID}")]
         public IActionResult GetPermEmployeeByID(int ID)
         {
-            try
+            var read = perm.Read(ID);
+            if (read != null)
             {
-                return Ok(perm.Read(ID));
+                return Ok(read);
             }
-            catch { return NotFound(); }
+            else { return NotFound(); }
         }
 
-        //[HttpPut("{ID}")]
-        //public IActionResult UpdatePermEmployee(int ID)
-        //{
-        //    add code
-        //}
+        [HttpPut("{ID}")]
+        public IActionResult UpdatePermEmployee(int ID, string fname, string lname, int? Salary, int? Bonus)
+        {
+            return Ok(perm.Update(ID, fname, lname, Salary, Bonus));
+        }
 
         [HttpPost()]
         public IActionResult PostNewPermEmployee(string fname, string lname, int salary, int bonus)
         {
-            try
-            {
-                return Ok(perm.Create(fname, lname, salary, bonus));
-            }
-            catch { return BadRequest(); }
+            return Ok(perm.Create(fname, lname, salary, bonus));
         }
 
         [HttpDelete("{ID}")]
         public IActionResult DeletePermEmployee(int ID)
         {
-            try
+            var delete = perm.Delete(ID);
+            if (delete)
             {
-                return Ok(perm.Delete(ID));
+                return Ok(delete);
             }
-            catch { return BadRequest(); }
+            else { return BadRequest(); }
         }
     }
 }

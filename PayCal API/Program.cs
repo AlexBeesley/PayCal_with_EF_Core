@@ -1,5 +1,4 @@
 using PayCal;
-using PayCal_API.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -26,6 +25,7 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
