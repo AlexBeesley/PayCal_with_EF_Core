@@ -4,12 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal API", "PayCal API\PayCal API.csproj", "{CE04295F-14CC-4100-9133-020BC4EE6C5A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8441060E-AD54-4490-A437-B1F655265EFB} = {8441060E-AD54-4490-A437-B1F655265EFB}
+		{A1C826FE-D417-4691-9B04-EAB682BD761D} = {A1C826FE-D417-4691-9B04-EAB682BD761D}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal", "..\PayCal\PayCal\PayCal.csproj", "{A995A623-45D0-48AA-9CA0-BF7380594DC3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal - Tests", "..\PayCal\PayCal - Tests\PayCal - Tests.csproj", "{8441060E-AD54-4490-A437-B1F655265EFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayCal Console", "PayCal Console\PayCal Console.csproj", "{A1C826FE-D417-4691-9B04-EAB682BD761D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal Console", "PayCal Console\PayCal Console.csproj", "{A1C826FE-D417-4691-9B04-EAB682BD761D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
