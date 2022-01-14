@@ -12,7 +12,7 @@ namespace PayCal_Console
             IRepository<TempEmployeeData> temp = new TempEmployeeRepository();
             PermEmployeeData permED = new PermEmployeeData();
             TempEmployeeData tempED = new TempEmployeeData();
-            Calculator cal = new Calculator(perm, temp);
+            ICalculator cal = new Calculator(perm, temp);
 
             int Output;
             string[] Fields = { "Enter First Name:  ", "Enter Surname:  ", "Enter Salary (if applicable):  £", "Enter Bonus (if applicable):  £",

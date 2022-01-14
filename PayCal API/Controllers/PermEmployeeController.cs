@@ -6,7 +6,7 @@ using PayCal.Services;
 namespace PayCal_API.Controllers
 {
     [ApiController]
-    [Route("~/Permanent")]
+    [Route("~/Permanent-Employees")]
     public class PermEmployeeController : Controller
     {
         private readonly IRepository<PermEmployeeData> _perm;
@@ -19,7 +19,9 @@ namespace PayCal_API.Controllers
         [HttpGet()]
         public IActionResult GetAllPermEmployees()
         {
-            return Ok(_perm.ReadAll());
+            var response = _perm.ReadAll();
+            if (response == null) { return NoContent(); }
+            else { return Ok(response); }
         }
 
         [HttpGet("{ID}")]
@@ -34,15 +36,19 @@ namespace PayCal_API.Controllers
         }
 
         [HttpPut("{ID}")]
-        public IActionResult UpdatePermEmployee(int ID, string fname, string lname, int? Salary, int? Bonus)
+        public IActionResult UpdatePermEmployee(int ID, string fname, string lname, int? salary, int? bonus)
         {
-            return Ok(_perm.Update(ID, fname, lname, Salary, Bonus));
+            var response =  _perm.Update(ID, fname, lname, salary, bonus);
+            if (response == null) { return NotFound(); }
+            else { return NoContent(); }
         }
 
         [HttpPost()]
         public IActionResult PostNewPermEmployee(string fname, string lname, int salary, int bonus)
         {
-            return Ok(_perm.Create(fname, lname, salary, bonus));
+            var response = _perm.Create(fname, lname, salary, bonus);
+            string uri = ($"{response.EmployeeID}");
+            return Created(uri, response);
         }
 
         [HttpDelete("{ID}")]

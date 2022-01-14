@@ -6,7 +6,7 @@ using PayCal.Services;
 namespace PayCal_API.Controllers
 {
     [ApiController]
-    [Route("~/Temporary")]
+    [Route("~/Temporary-Employees")]
     public class TempEmployeeController : Controller
     {
         private readonly IRepository<TempEmployeeData> _temp;
@@ -19,7 +19,9 @@ namespace PayCal_API.Controllers
         [HttpGet()]
         public IActionResult GetTempEmployees()
         {
-            return Ok(_temp.ReadAll());
+            var response = _temp.ReadAll();
+            if (response == null) { return NoContent(); }
+            else { return Ok(response); }
         }
 
         [HttpGet("{ID}")]
@@ -34,15 +36,19 @@ namespace PayCal_API.Controllers
         }
 
         [HttpPut("{ID}")]
-        public IActionResult UpdatePermEmployee(int ID, string fname, string lname, int? DayRate, int? WeeksWorked)
+        public IActionResult UpdateTempEmployee(int ID, string fname, string lname, int? dayrate, int? weeksworked)
         {
-            return Ok(_temp.Update(ID, fname, lname, DayRate, WeeksWorked));
+            var response =_temp.Update(ID, fname, lname, dayrate, weeksworked);
+            if (response == null) { return NotFound(); }
+            else { return NoContent(); }
         }
 
         [HttpPost()]
-        public IActionResult PutNewTempEmployee(string fname, string lname, int dayrate, int weeksworked)
+        public IActionResult PostNewTempEmployee(string fname, string lname, int dayrate, int weeksworked)
         {
-            return Ok(_temp.Create(fname, lname, dayrate, weeksworked));
+            var response = _temp.Create(fname, lname, dayrate, weeksworked);
+            string uri = ($"{response.EmployeeID}");
+            return Created(uri, response);
         }
 
         [HttpDelete("{ID}")]
