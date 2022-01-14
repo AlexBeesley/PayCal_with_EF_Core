@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using PayCal;
+using PayCal.Repositories;
 
 namespace PayCal___Tests
 {

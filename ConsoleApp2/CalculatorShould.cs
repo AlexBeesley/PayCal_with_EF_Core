@@ -1,5 +1,8 @@
 ﻿using NUnit.Framework;
-using PayCal;
+using PayCal.Models;
+using PayCal.Repositories;
+using PayCal.Services;
+
 
 namespace PayCal___Tests
 {
@@ -13,7 +16,7 @@ namespace PayCal___Tests
             IRepository<PermEmployeeData> perm = new PermEmployeeRepository();
             IRepository<TempEmployeeData> temp = new TempEmployeeRepository();
             Calculator sut = new Calculator(perm, temp);
-            double pay = 6986;
+            (double, double) pay = (47500, 19000);
 
             // Act
             var x = sut.CalculateEmployeePay(perm.GetIDfromIndex(1));
