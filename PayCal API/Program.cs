@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen( c =>
 
 builder.Services.AddSingleton<IRepository<PermEmployeeData>, PermEmployeeRepository>();
 builder.Services.AddSingleton<IRepository<TempEmployeeData>, TempEmployeeRepository>();
-builder.Services.AddSingleton<ICalculator>();
+builder.Services.AddSingleton<ICalculator, Calculator>();
 
 builder.Services.AddCors(options =>
 {
