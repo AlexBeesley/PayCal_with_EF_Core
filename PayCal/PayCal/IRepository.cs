@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PayCal
+namespace PayCal.Repositories
 {
     public interface IRepository<T>
     {

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PayCal.Models;
 
-namespace PayCal
+namespace PayCal.Repositories
 {
     public class PermEmployeeRepository : IRepository<PermEmployeeData>
     {
@@ -54,8 +55,12 @@ namespace PayCal
 
         public PermEmployeeData Read(int employeeID)
         {
-            PermEmployeeData employee = myPermEmployeeData.FirstOrDefault(e => e.EmployeeID == employeeID);
-            return employee;
+            if (myPermEmployeeData.Any(e => e.EmployeeID == employeeID))
+            {
+                PermEmployeeData employee = myPermEmployeeData.First(e => e.EmployeeID == employeeID);
+                return employee;
+            }
+            else { return null; }
         }
 
         public int Count()
@@ -65,18 +70,26 @@ namespace PayCal
 
         public PermEmployeeData Update(int employeeID, string fname, string lname, int? Salary, int? Bonus)
         {
-            var x = Read(employeeID);
-            x.FName = fname;
-            x.LName = lname;
-            x.Salaryint = Salary;
-            x.Bonusint = Bonus;
-            return x;
+            if (myPermEmployeeData.Any(e => e.EmployeeID == employeeID))
+            {
+                var x = Read(employeeID);
+                x.FName = fname;
+                x.LName = lname;
+                x.Salaryint = Salary;
+                x.Bonusint = Bonus;
+                return x;
+            }
+            else { return null; }
         }
 
         public bool Delete(int employeeID)
         {
-            PermEmployeeData employee = myPermEmployeeData.FirstOrDefault(e => e.EmployeeID == employeeID);
-            if (myPermEmployeeData.Remove(employee)) { return true; }
+            if (myPermEmployeeData.Any(e => e.EmployeeID == employeeID))
+            {
+                PermEmployeeData employee = myPermEmployeeData.FirstOrDefault(e => e.EmployeeID == employeeID);
+                if (myPermEmployeeData.Remove(employee)) { return true; }
+                else { return false; }
+            }
             else { return false; }
         }
     }
