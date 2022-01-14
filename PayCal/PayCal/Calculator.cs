@@ -1,6 +1,9 @@
-﻿namespace PayCal
+﻿using PayCal.Models;
+using PayCal.Repositories;
+
+namespace PayCal.Services
 {
-    public class Calculator
+    public class Calculator : ICalculator
     {
         public double AnnualPayAfterTax;
         public double AnnualPay;
@@ -14,9 +17,9 @@
             tempRE = (TempEmployeeRepository)tempRepo;
         }
 
-        public double CalculateEmployeePay(int employeeID)
+        public (double, double) CalculateEmployeePay(int employeeID)
         {
-            try 
+            try
             {
                 int Salary = (int)permRE.Read(employeeID).Salaryint;
                 int Bonus = (int)permRE.Read(employeeID).Bonusint;
@@ -29,9 +32,28 @@
                 AnnualPay = (DayRate * 5) + WeeksWorked;
             }
 
-            if (AnnualPay < 12570) { AnnualPayAfterTax = AnnualPay; }
-            if (AnnualPay > 12570) { AnnualPayAfterTax = (AnnualPay - 12570) * 0.2; }
-            return (AnnualPayAfterTax);
+            AnnualPayAfterTax = AnnualPay * CalculateTaxBands(AnnualPay);
+            return (AnnualPay, AnnualPayAfterTax);
+        }
+
+        public static double CalculateTaxBands(double grossIncome)
+        {
+            double percentageTax = 0;
+
+            if (grossIncome >= 11851 && grossIncome <= 46350)
+            {
+                percentageTax = 0.20;
+            }
+            else if (grossIncome >= 46351 && grossIncome <= 150000)
+            {
+                percentageTax = 0.40;
+            }
+            else if (grossIncome > 150000)
+            {
+                percentageTax = 0.45;
+            }
+
+            return percentageTax;
         }
     }
 }
