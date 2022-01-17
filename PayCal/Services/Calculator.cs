@@ -17,7 +17,7 @@ namespace PayCal.Services
             tempRE = (TempEmployeeRepository)tempRepo;
         }
 
-        public (double, double) CalculateEmployeePay(int employeeID)
+        public double CalculateEmployeePay(int employeeID)
         {
             try
             {
@@ -33,10 +33,10 @@ namespace PayCal.Services
             }
 
             AnnualPayAfterTax = AnnualPay * CalculateTaxBands(AnnualPay);
-            return (AnnualPay, AnnualPayAfterTax);
+            return AnnualPayAfterTax;
         }
 
-        public static double CalculateTaxBands(double grossIncome)
+        public double CalculateTaxBands(double grossIncome)
         {
             double percentageTax = 0;
 

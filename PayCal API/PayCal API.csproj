@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleApp1\PayCal.csproj" />
+    <ProjectReference Include="..\PayCal\PayCal.csproj" />
   </ItemGroup>
 
 </Project>

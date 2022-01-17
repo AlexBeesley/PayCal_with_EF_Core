@@ -2,6 +2,6 @@
 {
     public interface ICalculator
     {
-        (double, double) CalculateEmployeePay(int employeeID);
+        double CalculateEmployeePay(int employeeID);
     }
 }
