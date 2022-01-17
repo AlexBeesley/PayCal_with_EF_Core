@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using PayCal.Models;
 
-namespace PayCal
+namespace PayCal.Repositories
 {
     public class TempEmployeeRepository : IRepository<TempEmployeeData>
     {
@@ -45,8 +43,12 @@ namespace PayCal
 
         public TempEmployeeData Read(int employeeID)
         {
-            TempEmployeeData employee = myTempEmployeeData.FirstOrDefault(e => e.EmployeeID == employeeID);
-            return employee;
+            if (myTempEmployeeData.Any(e => e.EmployeeID == employeeID))
+            {
+                TempEmployeeData employee = myTempEmployeeData.First(e => e.EmployeeID == employeeID);
+                return employee;
+            }
+            else { return null; }
         }
 
         public int Count()
@@ -56,20 +58,27 @@ namespace PayCal
 
         public TempEmployeeData Update(int employeeID, string fname, string lname, int? DayRate, int? WeeksWorked)
         {
-            var x = Read(employeeID);
-            x.FName = fname;
-            x.LName = lname;
-            x.DayRateint = DayRate;
-            x.WeeksWorkedint = WeeksWorked;
-            return x;
+            if (myTempEmployeeData.Any(e => e.EmployeeID == employeeID))
+            {
+                var x = Read(employeeID);
+                x.FName = fname;
+                x.LName = lname;
+                x.DayRateint = DayRate;
+                x.WeeksWorkedint = WeeksWorked;
+                return x;
+            }
+            else { return null; }
         }
 
         public bool Delete(int employeeID)
         {
-            TempEmployeeData employee = myTempEmployeeData.FirstOrDefault(e => e.EmployeeID == employeeID);
-            if (myTempEmployeeData.Remove(employee)) { return true; }
+            if (myTempEmployeeData.Any(e => e.EmployeeID == employeeID))
+            {
+                TempEmployeeData employee = myTempEmployeeData.FirstOrDefault(e => e.EmployeeID == employeeID);
+                if (myTempEmployeeData.Remove(employee)) { return true; }
+                else { return false; }
+            }
             else { return false; }
         }
     }
 }
-

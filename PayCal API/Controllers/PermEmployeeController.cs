@@ -1,115 +1,65 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PayCal;
+using PayCal.Models;
+using PayCal.Repositories;
+using PayCal.Services;
 
 namespace PayCal_API.Controllers
 {
     [ApiController]
-    [Route("~/Permanent")]
+    [Route("~/Permanent-Employees")]
     public class PermEmployeeController : Controller
     {
-        private PermEmployeeRepository perm;
-        private Calculator cal;
+        private readonly IRepository<PermEmployeeData> _perm;
 
-        public PermEmployeeController([FromServices] IRepository<PermEmployeeData> Perm)
+        public PermEmployeeController(IRepository<PermEmployeeData> perm)
         {
-            perm = (PermEmployeeRepository)Perm;
-            cal = new Calculator(perm, null);
+            _perm = perm;
         }
 
-        [HttpGet("Employees")]
+        [HttpGet()]
         public IActionResult GetAllPermEmployees()
         {
-            return Ok(perm.ReadAll());
+            var response = _perm.ReadAll();
+            if (response == null) { return NoContent(); }
+            else { return Ok(response); }
         }
 
-        [HttpGet("Employee/{ID}")]
+        [HttpGet("{ID}")]
         public IActionResult GetPermEmployeeByID(int ID)
         {
-            try
+            var read = _perm.Read(ID);
+            if (read != null)
             {
-                return Ok(perm.Read(ID));
+                return Ok(read);
             }
-            catch { return NotFound(); }
+            else { return NotFound(); }
         }
 
-        [HttpGet("Employee/{ID}/Employment-Type")]
-        public IActionResult GetPermEmploymentType(int ID)
+        [HttpPut("{ID}")]
+        public IActionResult UpdatePermEmployee(int ID, string fname, string lname, int? salary, int? bonus)
         {
-            try
-            {
-                return Ok(perm.Read(ID).EmployeeID);
-            }
-            catch { return NotFound(); }
+            var response =  _perm.Update(ID, fname, lname, salary, bonus);
+            if (response == null) { return NotFound(); }
+            else { return NoContent(); }
         }
 
-        [HttpGet("Employee/{ID}/Full-Name")]
-        public IActionResult GetPermEmployeeFullName(int ID)
+        [HttpPost()]
+        public IActionResult PostNewPermEmployee(string fname, string lname, int salary, int bonus)
         {
-            try
-            {
-                return Ok(perm.Read(ID).FName + perm.Read(ID).LName);
-            }
-            catch { return NotFound(); }
+            var response = _perm.Create(fname, lname, salary, bonus);
+            string uri = ($"{response.EmployeeID}");
+            return Created(uri, response);
         }
 
-        [HttpGet("Employee/{ID}/Salary")]
-        public IActionResult GetPermSalary(int ID)
-        {
-            try
-            {
-                return Ok(perm.Read(ID).Salaryint);
-            }
-            catch { return NotFound(); }
-        }
-
-        [HttpGet("Employee/{ID}/WeeksWorked")]
-        public IActionResult GetPermBonus(int ID)
-        {
-            try
-            {
-                return Ok(perm.Read(ID).Bonusint);
-            }
-            catch { return NotFound(); }
-        }
-
-        [HttpGet("Employee/{ID}/Gross-Income")]
-        public IActionResult GetPermGrossIncome(int ID)
-        {
-            try
-            {
-                return Ok(cal.CalculateEmployeePay(ID).Item1);
-            }
-            catch { return NotFound(); }
-        }
-
-        [HttpGet("Employee/{ID}/Income-After-Tax")]
-        public IActionResult GetPermIncomeAfterTax(int ID)
-        {
-            try
-            {
-                return Ok(cal.CalculateEmployeePay(ID).Item2);
-            }
-            catch { return NotFound(); }
-        }
-
-        [HttpPost("New-Employee")]
-        public IActionResult PutNewPermEmployee(string fname, string lname, int salary, int bonus)
-        {
-            try
-            {
-                return Ok(perm.Create(fname, lname, salary, bonus));
-            }
-            catch { return BadRequest(); }
-        }
-
-        [HttpDelete("Delete-Employee/{ID}")]
+        [HttpDelete("{ID}")]
         public IActionResult DeletePermEmployee(int ID)
         {
-            try
+            var delete = _perm.Delete(ID);
+            if (delete)
             {
-                return Ok(perm.Delete(ID));
+                return Ok(delete);
             }
-            catch { return BadRequest(); }
+            else { return BadRequest(); }
         }
     }
 }

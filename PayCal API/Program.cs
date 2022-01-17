@@ -1,5 +1,6 @@
-using PayCal;
-using PayCal_API.Controllers;
+using PayCal.Models;
+using PayCal.Repositories;
+using PayCal.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -13,7 +14,7 @@ builder.Services.AddSwaggerGen( c =>
 
 builder.Services.AddSingleton<IRepository<PermEmployeeData>, PermEmployeeRepository>();
 builder.Services.AddSingleton<IRepository<TempEmployeeData>, TempEmployeeRepository>();
-builder.Services.AddSingleton<Calculator>();
+builder.Services.AddSingleton<ICalculator, Calculator>();
 
 builder.Services.AddCors(options =>
 {
@@ -26,6 +27,7 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

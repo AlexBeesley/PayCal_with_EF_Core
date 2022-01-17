@@ -1,6 +1,8 @@
-﻿using System;
+﻿using PayCal.Models;
+using PayCal.Repositories;
+using PayCal.Services;
 
-namespace PayCal
+namespace PayCal_Console
 {
     class Program
     {
@@ -10,14 +12,14 @@ namespace PayCal
             IRepository<TempEmployeeData> temp = new TempEmployeeRepository();
             PermEmployeeData permED = new PermEmployeeData();
             TempEmployeeData tempED = new TempEmployeeData();
-            Calculator cal = new Calculator(perm, temp);
+            ICalculator cal = new Calculator(perm, temp);
 
             int Output;
             string[] Fields = { "Enter First Name:  ", "Enter Surname:  ", "Enter Salary (if applicable):  £", "Enter Bonus (if applicable):  £",
                         "Enter Day Rate (if applicable):  £", "Enter Weeks Worked (if applicable):  " };
 
             Console.WriteLine("Welcome to the PayCal System, a Salary Calculator.\n");
-            
+
             while (true)
             {
                 Console.WriteLine(@"
@@ -195,12 +197,14 @@ Pay Calculator -----------------------------------------------------------------
                             {
                                 Console.WriteLine("Employee Name:  " + perm.Read(selectedID).FName + " " + perm.Read(selectedID).LName);
                                 Console.WriteLine("Employment Type:  Permanent");
+                                Console.WriteLine("Gross Annual Pay:  £" + cal.CalculateEmployeePay(selectedID));
                                 Console.WriteLine("Annual Pay after Tax:  £" + cal.CalculateEmployeePay(selectedID));
                             }
                             catch
                             {
                                 Console.WriteLine("Employee Name:  " + temp.Read(selectedID).FName + " " + temp.Read(selectedID).LName);
                                 Console.WriteLine("Employment Type:  Temporary");
+                                Console.WriteLine("Gross Annual Pay:  £" + cal.CalculateEmployeePay(selectedID));
                                 Console.WriteLine("Annual Pay after Tax:  £" + cal.CalculateEmployeePay(selectedID));
                             }
                         }
