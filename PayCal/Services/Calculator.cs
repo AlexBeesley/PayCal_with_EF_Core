@@ -8,27 +8,30 @@ namespace PayCal.Services
         public double AnnualPayAfterTax;
         public double AnnualPay;
 
-        private readonly PermEmployeeRepository permRE;
-        private readonly TempEmployeeRepository tempRE;
+        private readonly IRepository<PermEmployeeData> _perm;
+        private readonly IRepository<TempEmployeeData> _temp;
 
-        public Calculator(IRepository<PermEmployeeData> permRepo, IRepository<TempEmployeeData> tempRepo)
+        public Calculator(IRepository<PermEmployeeData> perm, IRepository<TempEmployeeData> temp)
         {
-            permRE = (PermEmployeeRepository)permRepo;
-            tempRE = (TempEmployeeRepository)tempRepo;
+            _perm = perm;
+            _temp = temp;
         }
 
         public double CalculateEmployeePay(int employeeID)
         {
-            try
-            {
-                int Salary = (int)permRE.Read(employeeID).Salaryint;
-                int Bonus = (int)permRE.Read(employeeID).Bonusint;
+            var tempDate = _temp.Read(employeeID);
+            var permData = _perm.Read(employeeID);
+
+            if (tempDate == null)
+            { 
+                int Salary = (int)permData.Salaryint;
+                int Bonus = (int)permData.Bonusint;
                 AnnualPay = Salary + Bonus;
             }
-            catch
+            else
             {
-                int DayRate = (int)tempRE.Read(employeeID).DayRateint;
-                int WeeksWorked = (int)tempRE.Read(employeeID).WeeksWorkedint;
+                int DayRate = (int)tempDate.DayRateint;
+                int WeeksWorked = (int)tempDate.WeeksWorkedint;
                 AnnualPay = (DayRate * 5) + WeeksWorked;
             }
 
@@ -42,11 +45,11 @@ namespace PayCal.Services
 
             if (grossIncome >= 11851 && grossIncome <= 46350)
             {
-                percentageTax = 0.20;
+                percentageTax = 0.2;
             }
             else if (grossIncome >= 46351 && grossIncome <= 150000)
             {
-                percentageTax = 0.40;
+                percentageTax = 0.4;
             }
             else if (grossIncome > 150000)
             {
