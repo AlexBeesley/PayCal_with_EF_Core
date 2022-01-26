@@ -1,9 +1,19 @@
 ﻿using PayCal.Models;
+using PayCal.Logging;
+using log4net;
+using System.Reflection;
 
 namespace PayCal.Repositories
 {
     public class TempEmployeeRepository : IRepository<TempEmployeeData>
     {
+        private readonly ILog _log;
+
+        public TempEmployeeRepository()
+        {
+            _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        }
+
         static Random rnd = new Random();
         private List<TempEmployeeData> myTempEmployeeData = new List<TempEmployeeData>()
         {
@@ -28,16 +38,19 @@ namespace PayCal.Repositories
                 WeeksWorkedint = WeeksWorked
             };
             myTempEmployeeData.Add(createTempEmployeeData);
+            _log.Debug($"\nNew Employee created with ID: {createTempEmployeeData.EmployeeID}");
             return (createTempEmployeeData);
         }
 
         public IEnumerable<TempEmployeeData> ReadAll()
         {
+            _log.Debug("\nReal All method accessed.");
             return myTempEmployeeData;
         }
 
         public int GetIDfromIndex(int employeeID)
         {
+            _log.Debug($"\nID from index: {myTempEmployeeData[employeeID].EmployeeID}");
             return myTempEmployeeData[employeeID].EmployeeID;
         }
 
@@ -46,13 +59,18 @@ namespace PayCal.Repositories
             if (myTempEmployeeData.Any(e => e.EmployeeID == employeeID))
             {
                 TempEmployeeData employee = myTempEmployeeData.First(e => e.EmployeeID == employeeID);
+                _log.Debug($"\nRead method accessed for Employee with ID: {employee.EmployeeID}");
                 return employee;
             }
-            else { return null; }
+            else {
+                _log.Debug($"\n{LogStrings.ID_NotFound}{employeeID}");
+                return null;
+            }
         }
 
         public int Count()
         {
+            _log.Debug($"\nCount method accessed; count: {myTempEmployeeData.Count}");
             return myTempEmployeeData.Count;
         }
 
@@ -65,9 +83,13 @@ namespace PayCal.Repositories
                 x.LName = lname;
                 x.DayRateint = DayRate;
                 x.WeeksWorkedint = WeeksWorked;
+                _log.Debug($"\nEmployee with ID: {employeeID} has been updated.");
                 return x;
             }
-            else { return null; }
+            else {
+                _log.Debug($"\n{LogStrings.ID_NotFound}{employeeID}");
+                return null;
+            }
         }
 
         public bool Delete(int employeeID)
@@ -75,10 +97,19 @@ namespace PayCal.Repositories
             if (myTempEmployeeData.Any(e => e.EmployeeID == employeeID))
             {
                 TempEmployeeData employee = myTempEmployeeData.FirstOrDefault(e => e.EmployeeID == employeeID);
-                if (myTempEmployeeData.Remove(employee)) { return true; }
-                else { return false; }
+                if (myTempEmployeeData.Remove(employee)) {
+                    _log.Debug($"\nEmployee with ID: {employeeID} has been deleted.");
+                    return true;
+                }
+                else {
+                    _log.Debug($"\nFailed to delete Employee with ID: {employeeID}");
+                    return false;
+                }
             }
-            else { return false; }
+            else {
+                _log.Debug($"\n{LogStrings.ID_NotFound}{employeeID}");
+                return false;
+            }
         }
     }
 }

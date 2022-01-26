@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PayCal.Models;
 using PayCal.Repositories;
+using PayCal.Logging;
 using log4net;
 using System.Reflection;
 
@@ -10,26 +11,26 @@ namespace PayCal_API.Controllers
     [Route("~/Permanent-Employees")]
     public class PermEmployeeController : Controller
     {
-        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly LogStrings logStr = new LogStrings();
-
+        private readonly ILog _log;
         private readonly IRepository<PermEmployeeData> _perm;
 
         public PermEmployeeController(IRepository<PermEmployeeData> perm)
         {
+            _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
             _perm = perm;
         }
+
 
         [HttpGet()]
         public IActionResult GetAllPermEmployees()
         {
             var response = _perm.ReadAll();
             if (response == null) {
-                log.Warn($"\nGET: {logStr.defaultmsg} {logStr.http204}\n{logStr.context204}");
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http204}\n{LogStrings.context204}");
                 return NoContent();
             }
             else {
-                log.Info($"\nGET: {logStr.defaultmsg} {logStr.http200}");
+                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
                 return Ok(response);
             }
         }
@@ -39,11 +40,11 @@ namespace PayCal_API.Controllers
         {
             var read = _perm.Read(ID);
             if (read != null) {
-                log.Warn($"\nGET: {logStr.defaultmsg} {logStr.http200}");
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
                 return Ok(read);
             }
             else {
-                log.Info($"\nGET: {logStr.defaultmsg} {logStr.http404}\n{logStr.context404}");
+                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
                 return NotFound();
             }
         }
@@ -53,11 +54,11 @@ namespace PayCal_API.Controllers
         {
             var response =  _perm.Update(ID, fname, lname, salary, bonus);
             if (response == null) {
-                log.Warn($"\nPUT: {logStr.defaultmsg} {logStr.http404}\n{logStr.context404}");
+                _log.Warn($"\nPUT: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
                 return NotFound();
             }
             else {
-                log.Info($"\nPUT: {logStr.defaultmsg} {logStr.http204}\n{logStr.context204}");
+                _log.Info($"\nPUT: {LogStrings.defaultmsg} {LogStrings.http204}\n{LogStrings.context204}");
                 return NoContent();
             }
         }
@@ -67,7 +68,7 @@ namespace PayCal_API.Controllers
         {
             var response = _perm.Create(fname, lname, salary, bonus);
             string uri = ($"{response.EmployeeID}");
-            log.Info($"\nPOST: {logStr.defaultmsg} {logStr.http201}\n{logStr.context201}");
+            _log.Info($"\nPOST: {LogStrings.defaultmsg} {LogStrings.http201}\n{LogStrings.context201}");
             return Created(uri, response);
         }
 
@@ -76,11 +77,11 @@ namespace PayCal_API.Controllers
         {
             var delete = _perm.Delete(ID);
             if (delete) {
-                log.Info($"\nDELETE: {logStr.defaultmsg} {logStr.http200}");
+                _log.Info($"\nDELETE: {LogStrings.defaultmsg} {LogStrings.http200}");
                 return Ok(delete);
             }
             else {
-                log.Error($"\nDELETE: {logStr.errormsg}\n{logStr.defaultmsg} {logStr.http400}\n{logStr.context400}");
+                _log.Error($"\nDELETE: {LogStrings.errormsg}\n{LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
                 return BadRequest();
             }
         }
