@@ -78,10 +78,10 @@ namespace PayCal_API.Controllers
             var delete = _perm.Delete(ID);
             if (delete) {
                 _log.Info($"\nDELETE: {LogStrings.defaultmsg} {LogStrings.http200}");
-                return Ok(delete);
+                return Ok();
             }
             else {
-                _log.Error($"\nDELETE: {LogStrings.errormsg}\n{LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
+                _log.Warn($"\nDELETE: {LogStrings.errormsg}\n{LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
                 return BadRequest();
             }
         }
