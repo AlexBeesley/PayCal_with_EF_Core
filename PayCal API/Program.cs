@@ -2,6 +2,10 @@ using PayCal.Models;
 using PayCal.Repositories;
 using PayCal.Services;
 
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
+//log4net.GlobalContext.Properties["LogFileName"] = @"C:\\file1";
+
+
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
