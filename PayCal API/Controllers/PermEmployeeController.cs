@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PayCal.Models;
 using PayCal.Repositories;
+using PayCal.Services;
 using PayCal.Logging;
 using log4net;
 using System.Reflection;
@@ -13,11 +14,13 @@ namespace PayCal_API.Controllers
     {
         private readonly ILog _log;
         private readonly IRepository<PermEmployeeData> _perm;
+        private readonly ICalculator _cal;
 
-        public PermEmployeeController(IRepository<PermEmployeeData> perm)
+        public PermEmployeeController(IRepository<PermEmployeeData> perm, ICalculator cal)
         {
             _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
             _perm = perm;
+            _cal = cal;
         }
 
 
@@ -39,9 +42,11 @@ namespace PayCal_API.Controllers
         public IActionResult GetPermEmployeeByID(int ID)
         {
             var read = _perm.Read(ID);
+            double pay = _cal.CalculateEmployeePay(ID);
+            var output = Json(pay, read);
             if (read != null) {
                 _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
-                return Ok(read);
+                return Ok(output);
             }
             else {
                 _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
