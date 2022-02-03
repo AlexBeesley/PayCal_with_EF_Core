@@ -1,6 +1,7 @@
 html, body {
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 body {
@@ -11,10 +12,12 @@ body {
 }
 
 header {
+    font-family: Ubuntu;
     padding: 30px;
 }
 
 footer {
+    font-family: Ubuntu;
     position: fixed;
     bottom: 0;
 }
@@ -113,9 +116,9 @@ body {
 }
 
 .card {
-    border-radius: 15px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    padding: 16px;
+    padding: 10px;
     text-align: left;
     background-color: #ffffff4f;
     font-family: Ubuntu;
