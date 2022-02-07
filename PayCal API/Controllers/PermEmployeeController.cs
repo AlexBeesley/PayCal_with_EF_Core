@@ -9,7 +9,7 @@ using System.Reflection;
 namespace PayCal_API.Controllers
 {
     [ApiController]
-    [Route("~/Permanent-Employees")]
+    [Route("[controller]")]
     public class PermEmployeeController : Controller
     {
         private readonly ILog _log;

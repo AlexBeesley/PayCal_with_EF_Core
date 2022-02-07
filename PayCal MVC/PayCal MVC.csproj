@@ -7,4 +7,8 @@
     <RootNamespace>PayCal_MVC</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PayCal\PayCal.csproj" />
+  </ItemGroup>
+
 </Project>

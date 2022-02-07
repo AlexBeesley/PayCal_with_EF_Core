@@ -7,25 +7,23 @@ using PayCal.Services;
 
 namespace PayCal_MVC.Controllers
 {
-    public class HomeController : Controller
+    public class PermController : Controller
     {
         private readonly IRepository<TempEmployeeData> _temp;
         private readonly IRepository<PermEmployeeData> _perm;
         private readonly ICalculator _cal;
 
-        public HomeController(IRepository<TempEmployeeData> temp,IRepository<PermEmployeeData> perm, ICalculator cal)
+        public PermController(IRepository<TempEmployeeData> temp, IRepository<PermEmployeeData> perm, ICalculator cal)
         {
             _temp = temp;
             _perm = perm;
             _cal = cal;
         }
 
-        public IActionResult Index()
+        public IActionResult Employees()
         {
-            ViewData["Count"] = _temp.Count() + _perm.Count();
-            ViewData["tempList"] = String.Concat(_temp.ReadAll());
             ViewData["permList"] = String.Concat(_perm.ReadAll());
-            return View();
+            return View("PermEmployees");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
