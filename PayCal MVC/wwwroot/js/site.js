@@ -1,22 +1,13 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-function getEmployees() {
-    fetch('https://localhost:7229/Permanent/Employees')
-        .then(result => result.json())
-        .then(data => {
-            document.getElementById("permEmployeesOutput").innerHTML = JSON.stringify(data);
-        })
+function getEmployeeBtn() {
+    document.getElementById("employeeID").style.display = "block";
+    document.getElementById("GetEmployee_submit_Btn").style.display = "block";
+}
 
-    fetch('https://localhost:7229/Temporary/Employees')
-        .then(result => result.json())
-        .then(data => {
-            document.getElementById("tempEmployeesOutput").innerHTML = JSON.stringify(data);
-        })
-
-    document.getElementById("heading1").style.display = "block";
-    document.getElementById("heading2").style.display = "block";
-    document.getElementById("GetEmployees_btn").innerText = "Refresh";
+function getEmployeeSubmitBtn() {
+    document.getElementById("outputWindow")
 }
 
 function getPayCalID4cal() {

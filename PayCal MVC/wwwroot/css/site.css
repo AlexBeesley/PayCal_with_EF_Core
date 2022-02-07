@@ -84,6 +84,11 @@ button {
         opacity: 0.8;
     }
 
+.menubtn {
+    background-color: #4ee5565e;
+    align-content: center;
+}
+
 /*grid layout*/
 * {
     box-sizing: border-box;

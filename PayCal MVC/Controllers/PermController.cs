@@ -9,13 +9,11 @@ namespace PayCal_MVC.Controllers
 {
     public class PermController : Controller
     {
-        private readonly IRepository<TempEmployeeData> _temp;
         private readonly IRepository<PermEmployeeData> _perm;
         private readonly ICalculator _cal;
 
-        public PermController(IRepository<TempEmployeeData> temp, IRepository<PermEmployeeData> perm, ICalculator cal)
+        public PermController(IRepository<PermEmployeeData> perm, ICalculator cal)
         {
-            _temp = temp;
             _perm = perm;
             _cal = cal;
         }
@@ -24,6 +22,12 @@ namespace PayCal_MVC.Controllers
         {
             ViewData["permList"] = String.Concat(_perm.ReadAll());
             return View("PermEmployees");
+        }
+
+        public IActionResult Employee(int ID)
+        {
+            ViewData["employeeByID"] = _perm.Read(ID);
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

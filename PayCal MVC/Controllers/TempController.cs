@@ -10,13 +10,11 @@ namespace PayCal_MVC.Controllers
     public class TempController : Controller
     {
         private readonly IRepository<TempEmployeeData> _temp;
-        private readonly IRepository<PermEmployeeData> _perm;
         private readonly ICalculator _cal;
 
-        public TempController(IRepository<TempEmployeeData> temp, IRepository<PermEmployeeData> perm, ICalculator cal)
+        public TempController(IRepository<TempEmployeeData> temp, ICalculator cal)
         {
             _temp = temp;
-            _perm = perm;
             _cal = cal;
         }
 
