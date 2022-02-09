@@ -20,13 +20,34 @@ namespace PayCal_MVC.Controllers
 
         public IActionResult Employees()
         {
-            ViewData["permList"] = String.Concat(_perm.ReadAll());
-            return View("PermEmployees");
+            ViewData["PermEmployees"] = String.Concat(_perm.ReadAll());
+            return View();
         }
 
-        public IActionResult Employee(int ID)
+        public IActionResult Employee(int id)
         {
-            ViewData["employeeByID"] = _perm.Read(ID);
+            ViewData["PermEmployee"] = _perm.Read(id);
+            return View();
+        }
+
+        public IActionResult PayCal(int id)
+        {
+            ViewData["PermPayCalDetails"] = _perm.Read(id);
+            ViewData["PermPayCal"] = _cal.CalculateEmployeePay(id);
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(string fname, string lname, int salary, int bonus)
+        {
+            ViewData["PermCreated"] = _perm.Create(fname, lname, salary, bonus);
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, string fname, string lname, int salary, int bonus)
+        {
+            ViewData["PermUpdated"] = _perm.Update(id, fname, lname, salary, bonus);
             return View();
         }
 

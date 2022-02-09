@@ -1,0 +1,19 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Permanent Employee";
+}
+<h2>Permanent Employee by ID</h2>
+<div class="card">
+    <br><code>@ViewData["PermPayCalDetails"]</code>
+    <code>Total annual pay after tax: £@ViewData["PermPayCal"]</code><br>
+</div>
+
+<div class="column">
+    <div class="cards">
+        <a class="buttons" id="PermEmployeesBtn" asp-area="" asp-controller="Perm" asp-action="Employees">
+            <button id="back_btn">Back</button>
+        </a>
+    </div>
+</div>

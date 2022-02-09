@@ -49,22 +49,36 @@ input[type='submit'], button, [aria-label] {
     cursor: pointer;
 }
 
-#editForm {
-    display: none;
-}
-
-.buttons {
-    padding-left: 30px;
+input[type=text], input[type=password] {
+    width: 14rem;
+    border-radius: 15px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #ccc;
     font-family: Ubuntu;
 }
 
-input[type=text], input[type=password] {
-    width: auto;
+input[type=number] {
+    width: 11rem;
+    border-radius: 15px;
     padding: 12px 20px;
     margin: 8px 0;
-    display: inline-block;
+    display: block;
     border: 1px solid #ccc;
-    box-sizing: border-box;
+    font-family: Ubuntu;
+}
+
+input[type=submit] {
+    width: 6rem;
+    color: white;
+    background-color: #4ee5565e;
+    border-radius: 15px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: block;
+    text-align: left;
+    border: 1px #4ee5565e;
     font-family: Ubuntu;
 }
 
@@ -87,6 +101,15 @@ button {
 .menubtn {
     background-color: #4ee5565e;
     align-content: center;
+}
+
+#editForm {
+    display: none;
+}
+
+.buttons {
+    padding-left: 30px;
+    font-family: Ubuntu;
 }
 
 /*grid layout*/

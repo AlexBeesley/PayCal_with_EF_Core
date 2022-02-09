@@ -1,0 +1,64 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Permanent Employees";
+}
+
+<h2>Permanent Employee Management</h2>
+<div class="card">
+    <code id="outputWindow" style="white-space: pre-line">@ViewData["PermEmployees"]</code><br>
+</div>
+
+<div class="column">
+    <div class="cards">
+        <button class="menubtn" id="GetEmployee_Btn" onclick="ShowMenu_GetEmployeeBtn()">Get Employee</button>
+    </div>
+    <form id="getbyID_form" asp-controller="Perm" asp-action="Employee" method="get" style="display: none;">
+        <input type="number" name="id" placeholder="Employee ID"/>
+        <input type="submit" value="Submit"/>
+    </form>
+</div>
+
+<div class="column">
+    <div class="cards">
+        <button class="menubtn" id="payCalculator_btn" onclick="ShowMenu_PayCalBtn()">Pay Calculator</button>
+    </div>
+    <form id="PayCal_form" asp-controller="Perm" asp-action="PayCal" method="get" style="display: none;">
+        <input type="number" name="id" placeholder="Employee ID"/>
+        <input type="submit" value="Submit"/>
+    </form>
+</div>
+
+<div class="column">
+    <div class="cards">
+        <button class="menubtn" id="addEmployee_btn" onclick="ShowMenu_AddEmployeeBtn()">Add Employee</button>
+    </div>
+    <form id="Create_form" asp-controller="Perm" asp-action="Create" method="post" style="display: none;">
+        <input type="text" name="fname" placeholder="First Name"/>
+        <input type="text" name="lname" placeholder="Last Name"/>
+        <input type="number" name="salary" placeholder="Salary"/>
+        <input type="number" name="bonus" placeholder="Bonus"/>
+        <input type="submit" value="Create"/>
+    </form>
+</div>
+
+<div class="column">
+    <div class="cards">
+        <button class="menubtn" id="editEmployee_btn" onclick="ShowMenu_EditEmployeeBtn()">Edit Employee</button>
+    </div>
+    <form id="Edit_form" asp-controller="Perm" asp-action="Edit" method="post" style="display: none;">
+        <input type="number" name="id" placeholder="Employee ID"/>
+        <input type="text" name="fname" placeholder="First Name"/>
+        <input type="text" name="lname" placeholder="Last Name"/>
+        <input type="number" name="salary" placeholder="Salary"/>
+        <input type="number" name="bonus" placeholder="Bonus"/>
+        <input type="submit" value="Update"/>
+    </form>
+</div>
+
+<div class="column">
+    <div class="cards">
+        <button class="menubtn" id="Refresh_btn" onclick="Refresh()">Refresh</button>
+    </div>
+</div>
