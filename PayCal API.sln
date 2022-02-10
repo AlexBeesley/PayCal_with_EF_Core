@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal API", "PayCal API\Pa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal Console", "PayCal Console\PayCal Console.csproj", "{A1C826FE-D417-4691-9B04-EAB682BD761D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayCal", "PayCal\PayCal.csproj", "{46F7888A-80F6-417B-A647-BE3603FC51F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal", "PayCal\PayCal.csproj", "{46F7888A-80F6-417B-A647-BE3603FC51F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayCal - Tests", "PayCal Tests\PayCal - Tests.csproj", "{F798986A-7999-49E4-A0CF-7D9423538113}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal - Tests", "PayCal Tests\PayCal - Tests.csproj", "{F798986A-7999-49E4-A0CF-7D9423538113}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayCal MVC", "PayCal MVC\PayCal MVC.csproj", "{9A6947ED-6267-4D1E-BA05-2DA882788B46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F798986A-7999-49E4-A0CF-7D9423538113}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F798986A-7999-49E4-A0CF-7D9423538113}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F798986A-7999-49E4-A0CF-7D9423538113}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A6947ED-6267-4D1E-BA05-2DA882788B46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A6947ED-6267-4D1E-BA05-2DA882788B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A6947ED-6267-4D1E-BA05-2DA882788B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A6947ED-6267-4D1E-BA05-2DA882788B46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

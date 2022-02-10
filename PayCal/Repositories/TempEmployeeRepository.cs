@@ -24,7 +24,25 @@ namespace PayCal.Repositories
                 LName = "Jones",
                 DayRateint = 350,
                 WeeksWorkedint = 40
-            }
+            },
+            
+            new TempEmployeeData()
+            {
+                EmployeeID = rnd.Next(1000,9999),
+                FName = "Kate",
+                LName = "Rugby",
+                DayRateint = 240,
+                WeeksWorkedint = 49
+            },
+            
+            new TempEmployeeData()
+            {
+                EmployeeID = rnd.Next(1000,9999),
+                FName = "Hassan",
+                LName = "Ahmad",
+                DayRateint = 120,
+                WeeksWorkedint = 16
+            },
         };
 
         public TempEmployeeData Create(string fname, string lname, int? DayRate, int? WeeksWorked)
