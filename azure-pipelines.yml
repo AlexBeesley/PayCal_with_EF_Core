@@ -33,3 +33,20 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+
+# Add deploy step for WebApp
+# Package "WebApp.zip" is successfully created as single file at the following location:
+# file:///D:/a/1/a
+# ref: https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-rm-web-app-deployment?view=azure-devops
+# ref: https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml
+
+- task: AzureRmWebAppDeployment@4
+  displayName: Deploy Mvc Web App
+  inputs:
+      ConnectionType: AzureRM
+      azureSubscription: IT-SBX           
+      appType: webApp
+      # ResourceGroupName:
+      WebAppName: app-uks-it-sbx-dev-poc-01
+      Package: '$(Build.ArtifactStagingDirectory)\WebApp.zip'
