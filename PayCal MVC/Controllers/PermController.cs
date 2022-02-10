@@ -51,6 +51,14 @@ namespace PayCal_MVC.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            ViewData["PermDeletedid"] = id;
+            ViewData["PermDeleted"] = _perm.Delete(id);
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

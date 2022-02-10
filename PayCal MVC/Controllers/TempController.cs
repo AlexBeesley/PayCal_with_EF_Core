@@ -51,7 +51,7 @@ namespace PayCal_MVC.Controllers
             return View();
         }
 
-        [HttpDelete]
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             ViewData["TempDeletedid"] = id;

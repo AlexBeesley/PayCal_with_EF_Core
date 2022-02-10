@@ -60,7 +60,7 @@
     <div class="cards">
         <button class="menubtn" id="GetEmployee_Btn" onclick="ShowMenu_DeleteEmployeeBtn()">Delete Employee</button>
     </div>
-    <form id="Delete_form" asp-controller="Temp" asp-action="Delete" method="delete" style="display: none;">
+    <form id="Delete_form" asp-controller="Temp" asp-action="Delete" method="post" style="display: none;">
         <input type="number" name="id" placeholder="Employee ID"/>
         <input type="submit" value="Submit"/>
     </form>
