@@ -6,6 +6,7 @@
 trigger:
 - develop
 - feature/*
+- azure-pipelines
 
 pool:
   vmImage: 'windows-latest'
