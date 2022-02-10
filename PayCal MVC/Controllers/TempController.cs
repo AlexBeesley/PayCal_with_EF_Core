@@ -4,37 +4,72 @@ using System.Diagnostics;
 using PayCal.Models;
 using PayCal.Repositories;
 using PayCal.Services;
+using PayCal.Logging;
+using log4net;
+using System.Reflection;
 
 namespace PayCal_MVC.Controllers
 {
     public class TempController : Controller
     {
+        private readonly ILog _log;
         private readonly IRepository<TempEmployeeData> _temp;
         private readonly ICalculator _cal;
 
         public TempController(IRepository<TempEmployeeData> temp, ICalculator cal)
         {
+            _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
             _temp = temp;
             _cal = cal;
         }
 
         public IActionResult Employees()
         {
-            ViewData["TempEmployees"] = String.Concat(_temp.ReadAll());
-            return View();
+            var response = _temp.ReadAll();
+            if (response == null)
+            {
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http204}\n{LogStrings.context204}");
+                return View("NoContent");
+            }
+            else
+            {
+                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
+                ViewData["TempEmployees"] = String.Concat(response);
+                return View();
+            }
         }
 
         public IActionResult Employee(int id)
         {
-            ViewData["TempEmployee"] = _temp.Read(id);
-            return View();
+            var response = _temp.Read(id);
+            if (response == null)
+            {
+                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
+                return View("NotFound");
+            }
+            else
+            {
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
+                ViewData["TempEmployee"] = response;
+                return View();
+            }
         }
 
         public IActionResult PayCal(int id)
         {
-            ViewData["TempPayCalDetails"] = _temp.Read(id);
-            ViewData["TempPayCal"] = _cal.CalculateEmployeePay(id);
-            return View();
+            var response = _temp.Read(id);
+            if (response == null)
+            {
+                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
+                return View("NotFound");
+            }
+            else
+            {
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
+                ViewData["TempPayCalDetails"] = response;
+                ViewData["TempPayCal"] = _cal.CalculateEmployeePay(id);
+                return View();
+            }
         }
 
         [HttpPost]
@@ -51,12 +86,22 @@ namespace PayCal_MVC.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         public IActionResult Delete(int id)
         {
-            ViewData["TempDeletedid"] = id;
-            ViewData["TempDeleted"] = _temp.Delete(id);
-            return View();
+            var delete = _temp.Delete(id);
+            if (delete)
+            {
+                _log.Info($"\nDELETE: {LogStrings.defaultmsg} {LogStrings.http200}");
+                ViewData["TempDeletedid"] = id;
+                ViewData["TempDeleted"] = _temp.Delete(id);
+                return View();
+            }
+            else
+            {
+                _log.Warn($"\nDELETE: {LogStrings.errormsg}\n{LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
+                return View("NotFound");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

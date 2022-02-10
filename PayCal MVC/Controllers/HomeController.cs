@@ -4,20 +4,23 @@ using System.Diagnostics;
 using PayCal.Models;
 using PayCal.Repositories;
 using PayCal.Services;
+using PayCal.Logging;
+using log4net;
+using System.Reflection;
 
 namespace PayCal_MVC.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ILog _log;
         private readonly IRepository<TempEmployeeData> _temp;
         private readonly IRepository<PermEmployeeData> _perm;
-        private readonly ICalculator _cal;
 
-        public HomeController(IRepository<TempEmployeeData> temp,IRepository<PermEmployeeData> perm, ICalculator cal)
+        public HomeController(IRepository<TempEmployeeData> temp,IRepository<PermEmployeeData> perm)
         {
+            _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
             _temp = temp;
             _perm = perm;
-            _cal = cal;
         }
 
         public IActionResult Index()
@@ -25,6 +28,7 @@ namespace PayCal_MVC.Controllers
             ViewData["Count"] = _temp.Count() + _perm.Count();
             ViewData["tempList"] = String.Concat(_temp.ReadAll());
             ViewData["permList"] = String.Concat(_perm.ReadAll());
+            _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
             return View();
         }
 

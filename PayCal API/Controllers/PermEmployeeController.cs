@@ -87,7 +87,7 @@ namespace PayCal_API.Controllers
             }
             else {
                 _log.Warn($"\nDELETE: {LogStrings.errormsg}\n{LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
-                return BadRequest();
+                return NotFound();
             }
         }
     }

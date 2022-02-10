@@ -43,13 +43,13 @@ namespace PayCal_API.Controllers
             var read = _temp.Read(ID);
             double pay = _cal.CalculateEmployeePay(ID);
             var output = Json(pay, read);
-            if (read != null) {
-                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
-                return Ok(output);
-            }
-            else {
+            if (read == null) {
                 _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
                 return NotFound();
+            }
+            else {
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
+                return Ok(output);
             }
         }
 
@@ -86,7 +86,7 @@ namespace PayCal_API.Controllers
             }
             else {
                 _log.Warn($"\nDELETE: {LogStrings.errormsg}\n{LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
-                return BadRequest();
+                return NotFound();
             }
         }
     }

@@ -4,37 +4,72 @@ using System.Diagnostics;
 using PayCal.Models;
 using PayCal.Repositories;
 using PayCal.Services;
+using PayCal.Logging;
+using log4net;
+using System.Reflection;
 
 namespace PayCal_MVC.Controllers
 {
     public class PermController : Controller
     {
+        private readonly ILog _log;
         private readonly IRepository<PermEmployeeData> _perm;
         private readonly ICalculator _cal;
 
         public PermController(IRepository<PermEmployeeData> perm, ICalculator cal)
         {
+            _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
             _perm = perm;
             _cal = cal;
         }
 
         public IActionResult Employees()
         {
-            ViewData["PermEmployees"] = String.Concat(_perm.ReadAll());
-            return View();
+            var response = _perm.ReadAll();
+            if (response == null)
+            {
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http204}\n{LogStrings.context204}");
+                return View("NoContent");
+            }
+            else
+            {
+                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
+                ViewData["PermEmployees"] = String.Concat(response);
+                return View();
+            }
         }
 
         public IActionResult Employee(int id)
         {
-            ViewData["PermEmployee"] = _perm.Read(id);
-            return View();
+            var response = _perm.Read(id);
+            if (response == null)
+            {
+                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
+                return View("NotFound");
+            }
+            else
+            {
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
+                ViewData["PermEmployee"] = response;
+                return View();
+            }
         }
 
         public IActionResult PayCal(int id)
         {
-            ViewData["PermPayCalDetails"] = _perm.Read(id);
-            ViewData["PermPayCal"] = _cal.CalculateEmployeePay(id);
-            return View();
+            var response = _perm.Read(id);
+            if (response == null)
+            {
+                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
+                return View("NotFound");
+            }
+            else
+            {
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
+                ViewData["PermPayCalDetails"] = _perm.Read(id);
+                ViewData["PermPayCal"] = _cal.CalculateEmployeePay(id);
+                return View();
+            }
         }
 
         [HttpPost]
@@ -51,12 +86,23 @@ namespace PayCal_MVC.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         public IActionResult Delete(int id)
         {
-            ViewData["PermDeletedid"] = id;
-            ViewData["PermDeleted"] = _perm.Delete(id);
-            return View();
+            var delete = _perm.Delete(id);
+            if (delete)
+            {
+                _log.Info($"\nDELETE: {LogStrings.defaultmsg} {LogStrings.http200}");
+                ViewData["PermDeletedid"] = id;
+                ViewData["PermDeleted"] = _perm.Delete(id);
+                return View();
+            }
+            else
+            {
+                _log.Warn($"\nDELETE: {LogStrings.errormsg}\n{LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
+                return View("NotFound");
+            }
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

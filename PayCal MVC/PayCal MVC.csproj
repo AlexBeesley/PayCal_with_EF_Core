@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PayCal\PayCal.csproj" />
   </ItemGroup>
 
