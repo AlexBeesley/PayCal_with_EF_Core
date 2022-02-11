@@ -141,6 +141,10 @@ button {
     }
 }
 
+#outputWindow {
+    white-space: pre-line;
+}
+
 /* Style the counter cards */
 .cards {
     padding: 16px;
@@ -155,4 +159,9 @@ button {
     text-align: left;
     background-color: #ffffff4f;
     font-family: Ubuntu;
+}
+
+/*Default Visablity*/
+#getbyID_form, #PayCal_form, #Create_form, #Edit_form, #Delete_form {
+    display: none;
 }

@@ -5,14 +5,14 @@
 
 <h2>Temporary Employee Management</h2>
 <div class="card">
-    <code id="outputWindow" style="white-space: pre-line">@Html.DisplayTextFor(model => model.Employees)</code><br>
+    <code id="outputWindow">@Html.DisplayTextFor(model => model.Employees)</code><br>
 </div>
 
 <div class="column">
     <div class="cards">
         <button class="menubtn" id="GetEmployee_Btn" onclick="ShowMenu_GetEmployeeBtn()">Get Employee</button>
     </div>
-    <form id="getbyID_form" asp-controller="Temp" asp-action="Employee" method="get" style="display: none;">
+    <form id="getbyID_form" asp-controller="Temp" asp-action="Employee" method="get">
         <input type="number" name="id" placeholder="Employee ID"/>
         <input type="submit" value="Submit"/>
     </form>
@@ -22,7 +22,7 @@
     <div class="cards">
         <button class="menubtn" id="payCalculator_btn" onclick="ShowMenu_PayCalBtn()">Pay Calculator</button>
     </div>
-    <form id="PayCal_form" asp-controller="Temp" asp-action="PayCal" method="get" style="display: none;">
+    <form id="PayCal_form" asp-controller="Temp" asp-action="PayCal" method="get">
         <input type="number" name="id" placeholder="Employee ID"/>
         <input type="submit" value="Submit"/>
     </form>
@@ -32,7 +32,7 @@
     <div class="cards">
         <button class="menubtn" id="addEmployee_btn" onclick="ShowMenu_AddEmployeeBtn()">Add Employee</button>
     </div>
-    <form id="Create_form" asp-controller="Temp" asp-action="Create" method="post" style="display: none;">
+    <form id="Create_form" asp-controller="Temp" asp-action="Create" method="post">
         <input type="text" name="fname" placeholder="First Name"/>
         <input type="text" name="lname" placeholder="Last Name"/>
         <input type="number" name="dayrate" placeholder="Day Rate"/>
@@ -45,7 +45,7 @@
     <div class="cards">
         <button class="menubtn" id="editEmployee_btn" onclick="ShowMenu_EditEmployeeBtn()">Edit Employee</button>
     </div>
-    <form id="Edit_form" asp-controller="Temp" asp-action="Edit" method="post" style="display: none;">
+    <form id="Edit_form" asp-controller="Temp" asp-action="Edit" method="post">
         <input type="number" name="id" placeholder="Employee ID"/>
         <input type="text" name="fname" placeholder="First Name"/>
         <input type="text" name="lname" placeholder="Last Name"/>
@@ -59,7 +59,7 @@
     <div class="cards">
         <button class="menubtn" id="GetEmployee_Btn" onclick="ShowMenu_DeleteEmployeeBtn()">Delete Employee</button>
     </div>
-    <form id="Delete_form" asp-controller="Temp" asp-action="Delete" method="post" style="display: none;">
+    <form id="Delete_form" asp-controller="Temp" asp-action="Delete" method="post">
         <input type="number" name="id" placeholder="Employee ID"/>
         <input type="submit" value="Submit"/>
     </form>
