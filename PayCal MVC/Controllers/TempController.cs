@@ -34,8 +34,10 @@ namespace PayCal_MVC.Controllers
             else
             {
                 _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
-                ViewData["TempEmployees"] = String.Concat(response);
-                return View();
+                return View(new TempViewModel
+                {
+                    Employees = String.Concat(response)
+                });
             }
         }
 
@@ -50,8 +52,10 @@ namespace PayCal_MVC.Controllers
             else
             {
                 _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
-                ViewData["TempEmployee"] = response;
-                return View();
+                return View(new TempViewModel
+                {
+                    Employee = String.Concat(response)
+                });
             }
         }
 
@@ -66,36 +70,46 @@ namespace PayCal_MVC.Controllers
             else
             {
                 _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
-                ViewData["TempPayCalDetails"] = response;
-                ViewData["TempPayCal"] = _cal.CalculateEmployeePay(id);
-                return View();
+                return View(new TempViewModel
+                {
+                    PayCalDetails = _temp.Read(id),
+                    PayCalculated = _cal.CalculateEmployeePay(id)
+                });
             }
         }
 
         [HttpPost]
         public IActionResult Create(string fname, string lname, int dayrate, int weeksworked)
         {
-            ViewData["TempCreated"] = _temp.Create(fname, lname, dayrate, weeksworked);
-            return View();
+            return View(new TempViewModel
+            {
+                Created = _temp.Create(fname, lname, dayrate, weeksworked)
+            });
         }
 
         [HttpPost]
         public IActionResult Edit(int id, string fname, string lname, int dayrate, int weeksworked)
         {
-            ViewData["TempUpdated"] = _temp.Update(id, fname, lname, dayrate, weeksworked);
-            return View();
+            return View(new TempViewModel
+            {
+                Updated = _temp.Update(id, fname, lname, dayrate, weeksworked)
+            });
         }
 
         [HttpPost, ActionName("Delete")]
         public IActionResult Delete(int id)
         {
+            var read = _temp.Read(id);
             var delete = _temp.Delete(id);
+
             if (delete)
             {
                 _log.Info($"\nDELETE: {LogStrings.defaultmsg} {LogStrings.http200}");
-                ViewData["TempDeletedid"] = id;
-                ViewData["TempDeleted"] = _temp.Delete(id);
-                return View();
+                return View(new TempViewModel
+                {
+                    DeletedID = id,
+                    Deleted = read
+                });
             }
             else
             {

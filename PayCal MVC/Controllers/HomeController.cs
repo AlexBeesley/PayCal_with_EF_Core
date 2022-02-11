@@ -3,7 +3,6 @@ using PayCal_MVC.Models;
 using System.Diagnostics;
 using PayCal.Models;
 using PayCal.Repositories;
-using PayCal.Services;
 using PayCal.Logging;
 using log4net;
 using System.Reflection;
@@ -25,11 +24,13 @@ namespace PayCal_MVC.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Count"] = _temp.Count() + _perm.Count();
-            ViewData["tempList"] = String.Concat(_temp.ReadAll());
-            ViewData["permList"] = String.Concat(_perm.ReadAll());
             _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
-            return View();
+            return View(new HomeViewModel
+            {
+                Count = _temp.Count() + _perm.Count(),
+                tempList = String.Concat(_temp.ReadAll()),
+                permList = String.Concat(_perm.ReadAll())
+            });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

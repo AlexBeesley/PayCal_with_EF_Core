@@ -1,12 +1,10 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model PayCal_MVC.Models.PermViewModel
 @{
     ViewData["Title"] = "Permanent Employee";
 }
 <h2>Permanent Employee by ID</h2>
 <div class="card">
-    <br><code>@ViewData["PermEmployee"]</code><br>
+    <br><code>@Html.DisplayTextFor(model => model.Employee)</code><br>
 </div>
 
 <div class="column">

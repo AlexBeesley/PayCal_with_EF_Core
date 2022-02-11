@@ -34,8 +34,10 @@ namespace PayCal_MVC.Controllers
             else
             {
                 _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
-                ViewData["PermEmployees"] = String.Concat(response);
-                return View();
+                return View(new PermViewModel
+                {
+                    Employees = String.Concat(response)
+                });
             }
         }
 
@@ -50,8 +52,10 @@ namespace PayCal_MVC.Controllers
             else
             {
                 _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
-                ViewData["PermEmployee"] = response;
-                return View();
+                return View(new PermViewModel
+                {
+                    Employee = String.Concat(response)
+                });
             }
         }
 
@@ -66,43 +70,52 @@ namespace PayCal_MVC.Controllers
             else
             {
                 _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
-                ViewData["PermPayCalDetails"] = _perm.Read(id);
-                ViewData["PermPayCal"] = _cal.CalculateEmployeePay(id);
-                return View();
+                return View(new PermViewModel
+                {
+                    PayCalDetails = _perm.Read(id),
+                    PayCalculated = _cal.CalculateEmployeePay(id)
+                });
             }
         }
 
         [HttpPost]
         public IActionResult Create(string fname, string lname, int salary, int bonus)
         {
-            ViewData["PermCreated"] = _perm.Create(fname, lname, salary, bonus);
-            return View();
+            return View(new PermViewModel
+            {
+                Created = _perm.Create(fname, lname, salary, bonus)
+            });
         }
 
         [HttpPost]
         public IActionResult Edit(int id, string fname, string lname, int salary, int bonus)
         {
-            ViewData["PermUpdated"] = _perm.Update(id, fname, lname, salary, bonus);
-            return View();
+            return View(new PermViewModel
+            {
+                Updated = _perm.Update(id, fname, lname, salary, bonus)
+            });
         }
 
         [HttpPost, ActionName("Delete")]
         public IActionResult Delete(int id)
         {
+            var read = _perm.Read(id);
             var delete = _perm.Delete(id);
+
             if (delete)
             {
                 _log.Info($"\nDELETE: {LogStrings.defaultmsg} {LogStrings.http200}");
-                ViewData["PermDeletedid"] = id;
-                ViewData["PermDeleted"] = _perm.Delete(id);
-                return View();
+                return View(new PermViewModel
+                {
+                    DeletedID = id,
+                    Deleted = read
+                });
             }
             else
             {
                 _log.Warn($"\nDELETE: {LogStrings.errormsg}\n{LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
                 return View("NotFound");
             }
-
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

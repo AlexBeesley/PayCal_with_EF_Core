@@ -1,13 +1,11 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model PayCal_MVC.Models.TempViewModel
 @{
     ViewData["Title"] = "Deleted Temporary Employee";
 }
 <h2>Permanent Employee by ID</h2>
 <div class="card">
-    <br><code>@ViewData["TempDeleted"]</code>
-    <code>Employee with ID @ViewData["TempDeletedid"] has been deleted.</code><br>
+    <br><code>@Html.DisplayTextFor(model => model.Deleted)</code>
+    <code>Employee with ID @Html.DisplayTextFor(model => model.DeletedID) has been deleted.</code><br>
 </div>
 
 <div class="column">

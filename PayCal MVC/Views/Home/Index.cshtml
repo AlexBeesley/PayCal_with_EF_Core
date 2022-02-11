@@ -1,11 +1,12 @@
-﻿@{
+﻿@model PayCal_MVC.Models.HomeViewModel
+@{
     ViewData["Title"] = "Home";
 }
 <h2>Home</h2>
 <div class="card">
     <h3>Permanent Employees</h3>
-    <code style="white-space: pre-line">@ViewData["permList"]</code><br><br>
+    <code style="white-space: pre-line">@Html.DisplayTextFor(model => model.permList)</code><br><br>
     <h3>Temporary Employees</h3>
-    <code style="white-space: pre-line">@ViewData["tempList"]</code><br><br>
-    <p>Total Employees: @ViewData["Count"]</p>
+    <code style="white-space: pre-line">@Html.DisplayTextFor(model => model.tempList)</code><br><br>
+    <p>Total Employees: @Html.DisplayTextFor(model => model.Count)</p>
 </div>
