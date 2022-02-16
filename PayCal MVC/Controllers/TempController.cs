@@ -36,7 +36,7 @@ namespace PayCal_MVC.Controllers
                 _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
                 return View(new TempViewModel
                 {
-                    Employees = String.Concat(response)
+                    Employees = response.ToList()
                 });
             }
         }
@@ -54,7 +54,7 @@ namespace PayCal_MVC.Controllers
                 _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
                 return View(new TempViewModel
                 {
-                    Employee = String.Concat(response)
+                    Employee = response
                 });
             }
         }

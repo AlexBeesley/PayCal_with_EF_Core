@@ -4,8 +4,9 @@ using PayCal.Repositories;
 namespace PayCal_MVC.Models {
     public class HomeViewModel
     {
-        public int? Count { get; set; }
-        public string? tempList { get; set;}
-        public string? permList { get; set; }
+        public int? permCount { get; set; }
+        public int? tempCount { get; set; }
+        public List<TempEmployeeData>? tempList { get; set;}
+        public List<PermEmployeeData>? permList { get; set; }
     }
 }

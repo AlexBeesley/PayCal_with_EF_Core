@@ -27,9 +27,10 @@ namespace PayCal_MVC.Controllers
             _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
             return View(new HomeViewModel
             {
-                Count = _temp.Count() + _perm.Count(),
-                tempList = String.Concat(_temp.ReadAll()),
-                permList = String.Concat(_perm.ReadAll())
+                tempCount = _temp.Count(),
+                permCount = _perm.Count(),
+                tempList = _temp.ReadAll().ToList(),
+                permList = _perm.ReadAll().ToList()
             });
         }
 

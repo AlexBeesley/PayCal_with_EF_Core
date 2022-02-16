@@ -5,8 +5,13 @@
 <h2>Home</h2>
 <div class="card">
     <h3>Permanent Employees</h3>
-    <code style="white-space: pre-line">@Html.DisplayTextFor(model => model.permList)</code><br><br>
+    @for(var i = 0; i < Model.permCount; i++)
+    {<code id="outputWindow">ID: @Model.permList[i].EmployeeID Name: @Model.permList[i].FName @Model.permList[i].LName Salary: @Model.permList[i].Salaryint Bonus: @Model.permList[i].Bonusint</code>}
+    <br><br>
+
     <h3>Temporary Employees</h3>
-    <code style="white-space: pre-line">@Html.DisplayTextFor(model => model.tempList)</code><br><br>
-    <p>Total Employees: @Html.DisplayTextFor(model => model.Count)</p>
+    @for(var i = 0; i < Model.tempCount; i++)
+    {<code id="outputWindow">ID: @Model.tempList[i].EmployeeID Name: @Model.tempList[i].FName @Model.tempList[i].LName Day Rate: @Model.tempList[i].DayRateint Weeks Worked: @Model.tempList[i].WeeksWorkedint</code>}
+    <br><br>
+    <p>Total Employees: @(Model.tempCount + Model.permCount)</p>
 </div>

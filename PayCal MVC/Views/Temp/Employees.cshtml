@@ -5,7 +5,8 @@
 
 <h2>Temporary Employee Management</h2>
 <div class="card">
-    <code id="outputWindow">@Html.DisplayTextFor(model => model.Employees)</code><br>
+    @for(var i = 0; i < Model.Employees.Count; i++)
+    {<code id="outputWindow">ID: @Model.Employees[i].EmployeeID Name: @Model.Employees[i].FName @Model.Employees[i].LName Day Rate: @Model.Employees[i].DayRateint Weeks Worked: @Model.Employees[i].WeeksWorkedint</code>}
 </div>
 
 <div class="column">

@@ -4,8 +4,8 @@
 }
 <h2>Permanent Employee by ID</h2>
 <div class="card">
-    <br><code>@Html.DisplayTextFor(model => model.PayCalDetails)</code>
-    <code>Total annual pay after tax: £@Html.DisplayTextFor(model => model.PayCalculated)</code><br>
+    <br><code>ID: @Model.PayCalDetails.EmployeeID Name: @Model.PayCalDetails.FName @Model.PayCalDetails.LName Salary: @Model.PayCalDetails.Salaryint Bonus: @Model.PayCalDetails.Bonusint</code>
+    <code>Total annual pay after tax: £@Model.PayCalculated</code><br>
 </div>
 
 <div class="column">

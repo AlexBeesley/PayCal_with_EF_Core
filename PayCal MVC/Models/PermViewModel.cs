@@ -4,13 +4,13 @@ namespace PayCal_MVC.Models
 {
     public class PermViewModel
     {
-        public string? Employees { get; set; }
-        public string? Employee { get; set; }
-        public EmployeeData? PayCalDetails { get; set; }
+        public List<PermEmployeeData>? Employees { get; set; }
+        public PermEmployeeData? Employee { get; set; }
+        public PermEmployeeData? PayCalDetails { get; set; }
         public double? PayCalculated { get; set; }
-        public EmployeeData? Created { get; set; }
-        public EmployeeData? Updated { get; set; }
+        public PermEmployeeData? Created { get; set; }
+        public PermEmployeeData? Updated { get; set; }
         public int? DeletedID { get; set; }
-        public EmployeeData? Deleted { get; set; }
+        public PermEmployeeData? Deleted { get; set; }
     }
 }

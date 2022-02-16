@@ -4,8 +4,8 @@
 }
 <h2>Permanent Employee by ID</h2>
 <div class="card">
-    <br><code>@Html.DisplayTextFor(model => model.Deleted)</code>
-    <code>Employee with ID @Html.DisplayTextFor(model => model.DeletedID) has been deleted.</code><br>
+    <br><code>ID: @Model.Deleted.EmployeeID Name: @Model.Deleted.FName @Model.Deleted.LName Salary: @Model.Deleted.Salaryint Bonus: @Model.Deleted.Bonusint</code>
+    <code>Employee with ID @Model.DeletedID has been deleted.</code><br>
 </div>
 
 <div class="column">

@@ -5,7 +5,8 @@
 
 <h2>Permanent Employee Management</h2>
 <div class="card">
-    <code id="outputWindow">@Html.DisplayTextFor(model => model.Employees)</code><br>
+    @for(var i = 0; i < Model.Employees.Count; i++)
+    {<code id="outputWindow">ID: @Model.Employees[i].EmployeeID Name: @Model.Employees[i].FName @Model.Employees[i].LName Salary: @Model.Employees[i].Salaryint Bonus: @Model.Employees[i].Bonusint</code>}
 </div>
 
 <div class="column">
