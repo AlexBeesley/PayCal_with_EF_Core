@@ -1,0 +1,17 @@
+﻿@model PayCal_MVC.Models.TempViewModel
+@{
+    ViewData["Title"] = "Deleted Temporary Employee";
+}
+<h2>Permanent Employee by ID</h2>
+<div class="card">
+    <br><code>ID: @Model.Deleted.EmployeeID Name: @Model.Deleted.FName @Model.Deleted.LName Day Rate: @Model.Deleted.DayRateint Weeks Worked: @Model.Deleted.WeeksWorkedint</code>
+    <code>Employee with ID @Model.DeletedID has been deleted.</code><br>
+</div>
+
+<div class="column">
+    <div class="cards">
+        <a class="buttons" id="TempEmployeesBtn" asp-area="" asp-controller="Temp" asp-action="Employees">
+            <button id="back_btn">Back</button>
+        </a>
+    </div>
+</div>

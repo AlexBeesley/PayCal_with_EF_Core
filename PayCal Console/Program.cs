@@ -29,7 +29,7 @@ Add new Employee ---------------------------------------------------------------
 Delete Employee ---------------------------------------------------------------------------------------------- 3
 Pay Calculator ----------------------------------------------------------------------------------------------- 4");
                 Console.Write(">>>  ");
-                string Selection = Console.ReadLine();
+                string? Selection = Console.ReadLine();
 
                 if (Selection == "1")
                 {
@@ -53,7 +53,7 @@ Pay Calculator -----------------------------------------------------------------
                         while (typeConvComplete == false)
                         {
                             Console.WriteLine("Is Employment Permanent? [Y/N]  ");
-                            string newIsPerm = Console.ReadLine();
+                            string? newIsPerm = Console.ReadLine();
 
                             if (newIsPerm == "Y" || newIsPerm == "y")
                             {
@@ -67,7 +67,7 @@ Pay Calculator -----------------------------------------------------------------
                                 for (int i = 2; i < 4; i++)
                                 {
                                     Console.Write(Fields[i]);
-                                    string Input = Console.ReadLine();
+                                    string? Input = Console.ReadLine();
                                     bool valid = int.TryParse(Input, out Output);
                                     if (valid)
                                     {
@@ -100,7 +100,7 @@ Pay Calculator -----------------------------------------------------------------
                                 for (int i = 4; i < 6; i++)
                                 {
                                     Console.Write(Fields[i]);
-                                    string Input = Console.ReadLine();
+                                    string? Input = Console.ReadLine();
                                     bool valid = int.TryParse(Input, out Output);
                                     if (valid)
                                     {
@@ -126,8 +126,8 @@ Pay Calculator -----------------------------------------------------------------
                             while (commitComplete == false)
                             {
                                 Console.Write("Confirm data is correct and fit for injection. [Y/n]  ");
-                                string confirm = Console.ReadLine();
-                                if (confirm == "Y" || confirm == "y" || confirm == "")
+                                string? confirm = Console.ReadLine();
+                                if (confirm == "Y" || confirm == "y" || confirm == null)
                                 {
                                     commit = true;
                                     commitComplete = true;
@@ -162,7 +162,7 @@ Pay Calculator -----------------------------------------------------------------
                         Console.WriteLine("DELETE EMPLOYEE\n");
                         Console.WriteLine($"{string.Concat(perm.ReadAll())}{string.Concat(temp.ReadAll())}");
                         Console.Write("\nSelect ID of Employee to be deleted:  ");
-                        string Input = Console.ReadLine();
+                        string? Input = Console.ReadLine();
                         bool valid = int.TryParse(Input, out Output);
                         if (valid)
                         {
@@ -188,7 +188,7 @@ Pay Calculator -----------------------------------------------------------------
                         Console.WriteLine("CALCULATE ANNUAL PAY\n");
                         Console.WriteLine($"{string.Concat(perm.ReadAll())}{string.Concat(temp.ReadAll())}");
                         Console.Write("\nSelect ID of Employee:  ");
-                        string Input = Console.ReadLine();
+                        string? Input = Console.ReadLine();
                         bool valid = int.TryParse(Input, out Output);
                         if (valid)
                         {

@@ -36,6 +36,33 @@ namespace PayCal.Repositories
                 Salaryint = 45000,
                 Bonusint = 2500
             },
+            
+            new PermEmployeeData()
+            {
+                EmployeeID = rnd.Next(1000,9999),
+                FName = "Harry",
+                LName = "Potter",
+                Salaryint = 23000,
+                Bonusint = 2300
+            },
+            
+            new PermEmployeeData()
+            {
+                EmployeeID = rnd.Next(1000,9999),
+                FName = "Jane",
+                LName = "Doe",
+                Salaryint = 48000,
+                Bonusint = 5000
+            },
+            
+            new PermEmployeeData()
+            {
+                EmployeeID = rnd.Next(1000,9999),
+                FName = "James",
+                LName = "Bond",
+                Salaryint = 67000,
+                Bonusint = 12000
+            }
         };
 
         public PermEmployeeData Create(string fname, string lname, int? Salary, int? Bonus)

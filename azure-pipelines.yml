@@ -1,0 +1,56 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- develop
+- feature/*
+- azure-pipelines
+
+pool:
+  vmImage: 'windows-2022'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+# TODO - publish test results so visible in Azure Devops UI
+
+# TODO - consider: we could save an Artifact as a package ready to deploy, and then have another pipeline pick it up.
+
+# Add deploy step for WebApp
+# Package "WebApp.zip" is successfully created as single file at the following location:
+# file:///D:/a/1/a
+# ref: https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-rm-web-app-deployment?view=azure-devops
+# ref: https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml
+
+- task: AzureRmWebAppDeployment@4
+  displayName: Deploy Mvc Web App
+  inputs:
+      ConnectionType: AzureRM
+      azureSubscription: IT-SBX           
+      appType: webApp
+      # ResourceGroupName:
+      WebAppName: app-uks-it-sbx-dev-poc-01
+      Package: '$(Build.ArtifactStagingDirectory)\WebApp.zip'

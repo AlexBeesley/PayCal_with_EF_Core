@@ -1,0 +1,16 @@
+﻿@model PayCal_MVC.Models.TempViewModel
+@{
+    ViewData["Title"] = "Created Temporary Employee";
+}
+<h2>Permanent Employee by ID</h2>
+<div class="card">
+    <br><code>ID: @Model.Created.EmployeeID Name: @Model.Created.FName @Model.Created.LName Day Rate: @Model.Created.DayRateint Weeks Worked: @Model.Created.WeeksWorkedint</code><br>
+</div>
+
+<div class="column">
+    <div class="cards">
+        <a class="buttons" id="TempEmployeesBtn" asp-area="" asp-controller="Temp" asp-action="Employees">
+            <button id="back_btn">Back</button>
+        </a>
+    </div>
+</div>

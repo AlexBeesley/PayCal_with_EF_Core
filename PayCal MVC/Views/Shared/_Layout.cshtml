@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PayCal MVC</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PayCal_MVC.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/25c5c1e8c2.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <nav class="row">
+            <div class="column">
+                <a id="homeLink" asp-area="" asp-controller="Home" asp-action="Index">
+                    <h1>PayCal MVC Demonstration</h1>
+                    <h4>Using .NET 6 with ASP.NET</h4>
+                </a>
+            </div>
+
+            <div class="column">
+                <div class="cards">
+                    <a class="buttons" id="PermEmployeesBtn" asp-area="" asp-controller="Perm" asp-action="Employees">
+                        <button id="payCalculator_btn">Manage Permanent Employees</button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="cards">
+                    <a class="buttons" id="TempEmployeesBtn" asp-area="" asp-controller="Temp" asp-action="Employees">
+                        <button id="addEmployee_btn">Manage Temporary Employees</button>
+                    </a>
+                </div>
+            </div>
+        </nav><br><br>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            &copy; TPR Training 2022 - PayCal by Alex Beesley; Source code [GitHub:
+            <a href="https://github.com/DABeesleyTPR/PayCal_API" target="_blank">
+                <i class="fa fa-github"></i>
+            </a>
+            Azure:
+            <a href="https://dev.azure.com/thepensionsregulator/TPR/_git/Test-PayCalculator-AlexBeesley?path=%2F&version=GBdevelop&_a=contents" target="_blank">
+                <i class="fa-brands fa-windows"></i>
+            </a>
+            ]
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

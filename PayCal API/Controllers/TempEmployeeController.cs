@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PayCal.Models;
 using PayCal.Repositories;
+using PayCal.Services;
 using PayCal.Logging;
 using log4net;
 using System.Reflection;
@@ -8,16 +9,18 @@ using System.Reflection;
 namespace PayCal_API.Controllers
 {
     [ApiController]
-    [Route("~/Temporary-Employees")]
+    [Route("[controller]")]
     public class TempEmployeeController : Controller
     {
         private readonly ILog _log;
         private readonly IRepository<TempEmployeeData> _temp;
+        private readonly ICalculator _cal;
 
-        public TempEmployeeController(IRepository<TempEmployeeData> temp)
+        public TempEmployeeController(IRepository<TempEmployeeData> temp, ICalculator cal)
         {
             _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
             _temp = temp;
+            _cal = cal;
         }
 
         [HttpGet()]
@@ -38,13 +41,15 @@ namespace PayCal_API.Controllers
         public IActionResult GetTempEmployeeByID(int ID)
         {
             var read = _temp.Read(ID);
-            if (read != null) {
-                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
-                return Ok(read);
-            }
-            else {
+            double pay = _cal.CalculateEmployeePay(ID);
+            var output = Json(pay, read);
+            if (read == null) {
                 _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
                 return NotFound();
+            }
+            else {
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
+                return Ok(output);
             }
         }
 
@@ -81,7 +86,7 @@ namespace PayCal_API.Controllers
             }
             else {
                 _log.Warn($"\nDELETE: {LogStrings.errormsg}\n{LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
-                return BadRequest();
+                return NotFound();
             }
         }
     }
