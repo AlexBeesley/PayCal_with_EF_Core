@@ -1,0 +1,30 @@
+﻿@model PayCal_MVC.Models.PermViewModel
+@{
+    ViewData["Title"] = "Updated Permanent Employee";
+}
+<h2>Permanent Employee by ID</h2>
+
+<div class="card" id="outputTablePerm">
+    <table>
+        <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Salary</th>
+        <th>Bonus</th>
+        </tr>
+        <tr>
+            <td>@Model.Updated.EmployeeID</td>
+            <td>@Model.Updated.FName @Model.Updated.LName</td>
+            <td>£@Model.Updated.Salaryint</td>
+            <td>£@Model.Updated.Bonusint</td>
+        </tr>
+    </table>
+</div><br>
+
+<div class="column">
+    <div class="cards">
+        <a class="buttons" id="PermEmployeesBtn" asp-area="" asp-controller="Perm" asp-action="Employees">
+            <button id="back_btn">Back</button>
+        </a>
+    </div>
+</div>

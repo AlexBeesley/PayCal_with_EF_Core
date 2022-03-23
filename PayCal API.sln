@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal API", "PayCal API\PayCal API.csproj", "{CE04295F-14CC-4100-9133-020BC4EE6C5A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal Console", "PayCal Console\PayCal Console.csproj", "{A1C826FE-D417-4691-9B04-EAB682BD761D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal", "PayCal\PayCal.csproj", "{46F7888A-80F6-417B-A647-BE3603FC51F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCal - Tests", "PayCal Tests\PayCal - Tests.csproj", "{F798986A-7999-49E4-A0CF-7D9423538113}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{278F53AC-A0A9-40A5-9C55-6C6AB1F4CA01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayCal MVC", "PayCal MVC\PayCal MVC.csproj", "{9A6947ED-6267-4D1E-BA05-2DA882788B46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVC", "MVC\MVC.csproj", "{6220FACA-823B-4E9B-B310-6C95DB382D63}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{EFCFE1DA-75E4-4C90-B383-F72EC007C737}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Console", "Console\Console.csproj", "{C446B12F-F24B-4AAE-869B-9868C036A9DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,26 +19,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CE04295F-14CC-4100-9133-020BC4EE6C5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CE04295F-14CC-4100-9133-020BC4EE6C5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CE04295F-14CC-4100-9133-020BC4EE6C5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CE04295F-14CC-4100-9133-020BC4EE6C5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1C826FE-D417-4691-9B04-EAB682BD761D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1C826FE-D417-4691-9B04-EAB682BD761D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1C826FE-D417-4691-9B04-EAB682BD761D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1C826FE-D417-4691-9B04-EAB682BD761D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{46F7888A-80F6-417B-A647-BE3603FC51F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{46F7888A-80F6-417B-A647-BE3603FC51F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46F7888A-80F6-417B-A647-BE3603FC51F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46F7888A-80F6-417B-A647-BE3603FC51F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F798986A-7999-49E4-A0CF-7D9423538113}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F798986A-7999-49E4-A0CF-7D9423538113}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F798986A-7999-49E4-A0CF-7D9423538113}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F798986A-7999-49E4-A0CF-7D9423538113}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A6947ED-6267-4D1E-BA05-2DA882788B46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A6947ED-6267-4D1E-BA05-2DA882788B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A6947ED-6267-4D1E-BA05-2DA882788B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A6947ED-6267-4D1E-BA05-2DA882788B46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{278F53AC-A0A9-40A5-9C55-6C6AB1F4CA01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{278F53AC-A0A9-40A5-9C55-6C6AB1F4CA01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{278F53AC-A0A9-40A5-9C55-6C6AB1F4CA01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{278F53AC-A0A9-40A5-9C55-6C6AB1F4CA01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6220FACA-823B-4E9B-B310-6C95DB382D63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6220FACA-823B-4E9B-B310-6C95DB382D63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6220FACA-823B-4E9B-B310-6C95DB382D63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6220FACA-823B-4E9B-B310-6C95DB382D63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFCFE1DA-75E4-4C90-B383-F72EC007C737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFCFE1DA-75E4-4C90-B383-F72EC007C737}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFCFE1DA-75E4-4C90-B383-F72EC007C737}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFCFE1DA-75E4-4C90-B383-F72EC007C737}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C446B12F-F24B-4AAE-869B-9868C036A9DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C446B12F-F24B-4AAE-869B-9868C036A9DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C446B12F-F24B-4AAE-869B-9868C036A9DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C446B12F-F24B-4AAE-869B-9868C036A9DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

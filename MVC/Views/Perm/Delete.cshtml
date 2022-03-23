@@ -1,0 +1,32 @@
+﻿@model PayCal_MVC.Models.PermViewModel
+@{
+    ViewData["Title"] = "Deleted Permanent Employee";
+}
+<h2>Permanent Employee by ID</h2>
+
+<div class="card" id="outputTablePerm">
+    <table>
+        <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Salary</th>
+        <th>Bonus</th>
+        </tr>
+        <tr>
+            <td>@Model.Deleted.EmployeeID</td>
+            <td>@Model.Deleted.FName @Model.Deleted.LName</td>
+            <td>£@Model.Deleted.Salaryint</td>
+            <td>£@Model.Deleted.Bonusint</td>
+        </tr>
+    </table>
+    <br>
+    <code>Employee with ID @Model.DeletedID has been deleted.</code>
+</div><br>
+
+<div class="column">
+    <div class="cards">
+        <a class="buttons" id="TempEmployeesBtn" asp-area="" asp-controller="Perm" asp-action="Employees">
+            <button id="back_btn">Back</button>
+        </a>
+    </div>
+</div>
