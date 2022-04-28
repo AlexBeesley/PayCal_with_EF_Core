@@ -1,56 +1,93 @@
 ﻿@model PayCal_MVC.Models.HomeViewModel
 @{
     ViewData["Title"] = "Overview";
+    if (Model.permList is null && Model.tempList is null)
+    {
+        throw new Exception("No data found");
+    }
+    var notnullPermList = Model.permList ?? new List<PayCal.Models.PermEmployeeData>();
+    var notnullTempList = Model.tempList ?? new List<PayCal.Models.TempEmployeeData>();
 }
-<h2>Overview</h2>
-<div class="card">
+
+<h2 class="h2Index">Overview</h2>
+
+<form class="searchbox" role="search" asp-controller="Home" asp-action="Search" asp-route-id="searchString" method="get">
+    <input required name="searchString" type="search" placeholder="Search..."/>
+    <button type="submit" value="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+</form>
+
+<div class="homeCard">
     <h3>Permanent Employees</h3>
-    <div id="outputConsolePerm">
-        @for(var i = 0; i < Model.permCount; i++)
-        {<code>ID: @Model.permList[i].EmployeeID Name: @Model.permList[i].FName @Model.permList[i].LName Salary: @Model.permList[i].Salaryint Bonus: @Model.permList[i].Bonusint</code><br>}
-    </div>
+    @if (Model.permCount == 0)
+    {
+        <p>No Permanent Employees found</p>
+    }
+        
+    @if (Model.permCount > 0)
+    {
+        <div id="outputConsolePerm">
+            @foreach (var item in notnullPermList)
+            {
+                <code>ID: @item.EmployeeID Name: @item.FName @item.LName Salary: @item.Salaryint Bonus: @item.Bonusint</code>
+            }
+        </div>
 
-    <div id="outputTablePerm">
-        <table>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Salary</th>
-            <th>Bonus</th>
-          </tr>
-          @for(var i = 0; i < Model.permCount; i++)
-            {<tr>
-                <td>@Model.permList[i].EmployeeID</td>
-                <td>@Model.permList[i].FName @Model.permList[i].LName</td>
-                <td>£@Model.permList[i].Salaryint</td>
-                <td>£@Model.permList[i].Bonusint</td>
-            </tr>}
-        </table>
-    </div><br>
-
+        <div id="outputTablePerm">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Salary</th>
+                    <th>Bonus</th>
+                </tr>
+                @foreach (var item in notnullPermList)
+                {
+                    <tr>
+                        <td>@item.EmployeeID</td>
+                        <td>@item.FName @item.LName</td>
+                        <td>£@item.Salaryint</td>
+                        <td>£@item.Bonusint</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    
     <h3>Temporary Employees</h3>
-    <div id="outputConsoleTemp">
-        @for(var i = 0; i < Model.tempCount; i++)
-        {<code>ID: @Model.tempList[i].EmployeeID Name: @Model.tempList[i].FName @Model.tempList[i].LName Day Rate: @Model.tempList[i].DayRateint Weeks Worked: @Model.tempList[i].WeeksWorkedint</code><br>}    
-    </div>
+    @if (Model.tempCount == 0)
+    {
+        <p>No Temporary Employees found</p>
+    }
+    
+    @if (Model.tempCount > 0)
+    {
+        <div id="outputConsoleTemp">
+            @foreach (var item in notnullTempList)
+            {
+                <code>ID: @item.EmployeeID Name: @item.FName @item.LName Day Rate: @item.DayRateint Weeks Worked: @item.WeeksWorkedint</code>
+            }
+        </div>
 
-    <div  id="outputTableTemp">
-        <table>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Day Rate</th>
-            <th>Weeks Worked</th>
-          </tr>
-          @for(var i = 0; i < Model.tempCount; i++)
-            {<tr>
-                <td>@Model.tempList[i].EmployeeID</td>
-                <td>@Model.tempList[i].FName @Model.tempList[i].LName</td>
-                <td>£@Model.tempList[i].DayRateint</td>
-                <td>@Model.tempList[i].WeeksWorkedint</td>
-            </tr>}
-        </table>
-    </div><br>
+        <div id="outputTableTemp">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Day Rate</th>
+                    <th>Weeks Worked</th>
+                </tr>
+                @foreach (var item in notnullTempList)
+                {
+                    <tr>
+                        <td>@item.EmployeeID</td>
+                        <td>@item.FName @item.LName</td>
+                        <td>£@item.DayRateint</td>
+                        <td>@item.WeeksWorkedint</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
 
     <p>Total Employees: @(Model.tempCount + Model.permCount)</p>
 </div>

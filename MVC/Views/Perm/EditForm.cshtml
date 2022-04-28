@@ -1,0 +1,36 @@
+﻿@model PayCal_MVC.Models.PermViewModel
+@{
+    ViewData["Title"] = "Update Permanent Employee";
+}
+<h2>Update Permanent Employee</h2>
+
+<div class="cardSingle" id="outputTablePerm">
+    <table>
+        <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Salary</th>
+        <th>Bonus</th>
+        </tr>
+        <tr>
+            <td>@Model.Employee.EmployeeID</td>
+            <td>@Model.Employee.FName @Model.Employee.LName</td>
+            <td>£@Model.Employee.Salaryint</td>
+            <td>£@Model.Employee.Bonusint</td>
+        </tr>
+    </table>
+</div>
+
+<form id="Edit_form" asp-controller="Perm" asp-action="Edit" asp-route-id=@Model.Employee.EmployeeID method="post">
+    <input type="text" name="fname" pattern="[A-Za-z]+" placeholder="First Name"/>
+    <input type="text" name="lname" pattern="[A-Za-z]+" placeholder="Last Name"/>
+    <input type="number" name="salary" min="0" placeholder="Salary"/>
+    <input type="number" name="bonus" min="0" placeholder="Bonus"/>
+    <input type="submit" value="Update"/>
+</form>
+
+<div class="cardsBackBtn">
+    <a class="buttons" id="PermEmployeesBtn" asp-area="" asp-controller="Perm" asp-action="Employees">
+        <button id="back_btn">Back</button>
+    </a>
+</div>

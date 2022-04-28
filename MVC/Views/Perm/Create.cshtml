@@ -1,10 +1,10 @@
 ﻿@model PayCal_MVC.Models.PermViewModel
 @{
-    ViewData["Title"] = "Created Permanent Employee";
+    ViewData["Title"] = "New Permanent Employee Created";
 }
-<h2>Permanent Employee by ID</h2>
+<h2>New Permanent Employee Created</h2>
 
-<div class="card" id="outputTablePerm">
+<div class="cardSingle" id="outputTablePerm">
     <table>
         <tr>
         <th>ID</th>
@@ -19,12 +19,10 @@
             <td>£@Model.Created.Bonusint</td>
         </tr>
     </table>
-</div><br>
+</div>
 
-<div class="column">
-    <div class="cards">
-        <a class="buttons" id="PermEmployeesBtn" asp-area="" asp-controller="Perm" asp-action="Employees">
-            <button id="back_btn">Back</button>
-        </a>
-    </div>
+<div class="cardsBackBtn">
+    <a class="buttons" id="PermEmployeesBtn" asp-area="" asp-controller="Perm" asp-action="Employees">
+        <button id="back_btn">Back</button>
+    </a>
 </div>

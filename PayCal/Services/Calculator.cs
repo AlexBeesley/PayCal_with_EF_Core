@@ -5,9 +5,6 @@ namespace PayCal.Services
 {
     public class Calculator : ICalculator
     {
-        public double AnnualPayAfterTax;
-        public double AnnualPay;
-
         private readonly IRepository<PermEmployeeData> _perm;
         private readonly IRepository<TempEmployeeData> _temp;
 
@@ -17,46 +14,47 @@ namespace PayCal.Services
             _temp = temp;
         }
 
-        public double CalculateEmployeePay(int employeeID)
-        {
-            var tempDate = _temp.Read(employeeID);
-            var permData = _perm.Read(employeeID);
+        public double AnnualPayAfterTax;
+        public double AnnualPay;
+        public double income;
 
-            if (tempDate == null)
-            { 
-                int Salary = (int)permData.Salaryint;
-                int Bonus = (int)permData.Bonusint;
-                AnnualPay = Salary + Bonus;
+        public double CalculateEmployeePay(string employeeID)
+        {
+            var permEmployee = _perm.Read(employeeID);
+            
+            if (permEmployee is null)
+            {
+                var tempEmployee = _temp.Read(employeeID);
+                income = tempEmployee.WeeksWorkedint * tempEmployee.DayRateint;
+            }
+            if (permEmployee is not null)
+            {
+                income = permEmployee.Salaryint + permEmployee.Bonusint;
+            }
+
+            double tax = 0;
+            if (income <= 18200)
+            {
+                tax = 0;
+            }
+            else if (income <= 37000)
+            {
+                tax = (income - 18200) * 0.19;
+            }
+            else if (income <= 87000)
+            {
+                tax = 3572 + (income - 37000) * 0.325;
+            }
+            else if (income <= 180000)
+            {
+                tax = 19822 + (income - 87000) * 0.37;
             }
             else
             {
-                int DayRate = (int)tempDate.DayRateint;
-                int WeeksWorked = (int)tempDate.WeeksWorkedint;
-                AnnualPay = (DayRate * 5) + WeeksWorked;
+                tax = 54232 + (income - 180000) * 0.45;
             }
-
-            AnnualPayAfterTax = AnnualPay * CalculateTaxBands(AnnualPay);
-            return AnnualPayAfterTax;
-        }
-
-        public double CalculateTaxBands(double grossIncome)
-        {
-            double percentageTax = 0;
-
-            if (grossIncome >= 11851 && grossIncome <= 46350)
-            {
-                percentageTax = 0.2;
-            }
-            else if (grossIncome >= 46351 && grossIncome <= 150000)
-            {
-                percentageTax = 0.4;
-            }
-            else if (grossIncome > 150000)
-            {
-                percentageTax = 0.45;
-            }
-
-            return percentageTax;
+            
+            return income - tax;
         }
     }
 }

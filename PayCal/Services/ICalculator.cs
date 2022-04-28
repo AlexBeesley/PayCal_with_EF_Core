@@ -2,6 +2,6 @@
 {
     public interface ICalculator
     {
-        double CalculateEmployeePay(int employeeID);
+        double CalculateEmployeePay(string employeeHook);
     }
 }

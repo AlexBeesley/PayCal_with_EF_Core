@@ -26,6 +26,16 @@ code {
     color: white;
     font-size: 16px;
     white-space: pre-line;
+    display: block;
+}
+
+form {
+    padding: 2rem;
+}
+
+.searchbox {
+    float: right;
+    padding: unset;
 }
 
 #homeLink {
@@ -35,13 +45,18 @@ code {
 table {
     font-family: Consolas;
     width: 100%;
-    table-layout: fixed;
+    table-layout: auto;
 }
 
 td {
     width: 1em;
     height: 1em;
     text-align: left;
+}
+
+.h2Index {
+    display: inline;
+    padding-top: 16px;
 }
 
 @keyframes gradient {
@@ -78,6 +93,16 @@ input[type=number] {
     padding: 12px 20px;
     margin: 8px 0;
     display: block;
+    border: 1px solid #ccc;
+    font-family: Ubuntu;
+}
+
+input[type=search] {
+    width: 14rem;
+    border-radius: 15px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline;
     border: 1px solid #ccc;
     font-family: Ubuntu;
 }
@@ -122,6 +147,10 @@ button {
 
 #editForm {
     display: none;
+}
+
+#trashIcon {
+    color: red;
 }
 
 .buttons {
@@ -173,6 +202,12 @@ button {
     font-family: Ubuntu;
 }
 
+.cardsBackBtn {
+    padding: 16px;
+    text-align: right;
+    font-family: Ubuntu;
+}
+
 .card {
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -180,9 +215,53 @@ button {
     text-align: left;
     background-color: #ffffff4f;
     font-family: Ubuntu;
+    width: 100%;
+    height: 31rem;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
-/*Default Visablity*/
-#getbyID_form, #PayCal_form, #Create_form, #Edit_form, #Delete_form {
-    display: none;
+.cardSingle {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    text-align: left;
+    background-color: #ffffff4f;
+    font-family: Ubuntu;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
+
+.homeCard {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    text-align: left;
+    background-color: #ffffff4f;
+    font-family: Ubuntu;
+    width: 100%;
+    height: 29rem;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 10px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #88ba1c;
+    }

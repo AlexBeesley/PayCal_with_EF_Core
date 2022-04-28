@@ -4,6 +4,7 @@ using PayCal.Models;
 using PayCal.Repositories;
 using PayCal.Services;
 using PayCal.Logging;
+using PayCal.Extensions;
 using log4net;
 using System.Reflection;
 
@@ -17,7 +18,13 @@ namespace PayCal_MVC.Controllers
 
         public TempController(IRepository<TempEmployeeData> temp, ICalculator cal)
         {
-            _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+            System.Type? declaringType = MethodBase.GetCurrentMethod().DeclaringType;            
+            if (declaringType is null)
+            {
+                throw new System.ArgumentNullException(nameof(declaringType));
+            }
+            
+            _log = LogManager.GetLogger(declaringType);
             _temp = temp;
             _cal = cal;
         }
@@ -25,10 +32,10 @@ namespace PayCal_MVC.Controllers
         public IActionResult Employees()
         {
             var response = _temp.ReadAll();
-            if (response == null)
+            if (response is null)
             {
                 _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http204}\n{LogStrings.context204}");
-                return RedirectToAction("Index", "ErrorController", null);
+                return RedirectToAction("Index", "ErrorController");
             }
             else
             {
@@ -40,17 +47,19 @@ namespace PayCal_MVC.Controllers
             }
         }
 
-        public IActionResult Employee(int id)
+        public IActionResult Employee(string id)
         {
             var response = _temp.Read(id);
-            if (response == null)
+            
+            if (response is null)
             {
                 _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
-                return RedirectToAction("Index", "ErrorController", null);
+                return RedirectToAction("Index", "ErrorController");
             }
             else
             {
                 _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
+
                 return View(new TempViewModel
                 {
                     Employee = response
@@ -58,13 +67,13 @@ namespace PayCal_MVC.Controllers
             }
         }
 
-        public IActionResult PayCal(int id)
+        public IActionResult PayCal(string id)
         {
             var response = _temp.Read(id);
-            if (response == null)
+            if (response is null)
             {
                 _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
-                return RedirectToAction("Index", "ErrorController", null);
+                return RedirectToAction("Index", "ErrorController");
             }
             else
             {
@@ -77,6 +86,12 @@ namespace PayCal_MVC.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult CreateForm()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Create(string fname, string lname, int dayrate, int weeksworked)
         {
@@ -86,22 +101,45 @@ namespace PayCal_MVC.Controllers
             });
         }
 
+        [HttpGet("id_editTemp")]
+        public IActionResult EditForm(string id)
+        {
+            var response = _temp.Read(id);
+            if (response is null)
+            {
+                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
+                return RedirectToAction("Index", "ErrorController");
+            }
+            else
+            {
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
+                return View(new TempViewModel
+                {
+                    Employee = response
+                });
+            }
+        }
+
         [HttpPost]
-        public IActionResult Edit(int id, string? fname, string? lname, int? dayrate, int? weeksworked)
+        public IActionResult Edit(string id, string? fname, string? lname, int? dayrate, int? weeksworked)
         {
             var read = _temp.Read(id);
-            if (fname == null) { fname = read.FName; }
-            if (lname == null) { lname = read.LName; }
-            if (dayrate == null) { dayrate = read.DayRateint; }
-            if (weeksworked == null) { weeksworked = read.WeeksWorkedint; }
+            if (fname is null) { fname = read.FName; }
+            if (lname is null) { lname = read.LName; }
+            if (dayrate is null) { dayrate = read.DayRateint; }
+            if (weeksworked is null) { weeksworked = read.WeeksWorkedint; }
+
+            int notnulldayrate = dayrate ?? read.DayRateint;
+            int notnullweeksworked = weeksworked ?? read.WeeksWorkedint;
+
             return View(new TempViewModel
             {
-                Updated = _temp.Update(id, fname, lname, dayrate, weeksworked)
+                Updated = _temp.Update(id, fname, lname, notnulldayrate, notnullweeksworked)
             });
         }
 
-        [HttpPost, ActionName("Delete")]
-        public IActionResult Delete(int id)
+        [HttpGet("id_deleteTemp"), ActionName("Delete")]
+        public IActionResult Delete(string id)
         {
             var read = _temp.Read(id);
             var delete = _temp.Delete(id);
@@ -118,8 +156,24 @@ namespace PayCal_MVC.Controllers
             else
             {
                 _log.Warn($"\nDELETE: {LogStrings.errormsg}\n{LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
-                return RedirectToAction("Index", "ErrorController", null);
+                return RedirectToAction("Index", "ErrorController");
             }
+        }
+
+        public IActionResult Search(string searchString)
+        {
+            _log.Info($"\nDEBUG: search string is >>> {searchString} <<<");
+            if (searchString is null)
+            {
+                return RedirectToAction("Employees");
+            }
+
+            IEnumerable<TempEmployeeData> tempEmployeesSearched = _temp.ReadAll().Where(s => s.FName.Contains(searchString) || s.LName.Contains(searchString));
+
+            return View("Employees", new TempViewModel
+            {
+                Employees = tempEmployeesSearched.ToList()
+            });
         }
     }
 }

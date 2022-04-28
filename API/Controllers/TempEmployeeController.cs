@@ -27,7 +27,7 @@ namespace PayCal_API.Controllers
         public IActionResult GetTempEmployees()
         {
             var response = _temp.ReadAll();
-            if (response == null) {
+            if (response is null) {
                 _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http204}\n{LogStrings.context204}");
                 return NoContent();
             }
@@ -38,42 +38,37 @@ namespace PayCal_API.Controllers
         }
 
         [HttpGet("{ID}")]
-        public IActionResult GetTempEmployeeByID(int ID)
+        public IActionResult GetTempEmployeeByID(string ID)
         {
-            if (ID.ToString().Length == 4)
+            var read = _temp.Read(ID);
+            if (read != null)
             {
-                var read = _temp.Read(ID);
-                double pay = _cal.CalculateEmployeePay(ID);
+                double pay = _cal.CalculateEmployeePay(read.EmployeeID);
                 var output = Json(pay, read);
-                if (read == null)
-                {
-                    _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
-                    return NotFound();
-                }
-                else
-                {
-                    _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
-                    return Ok(output);
-                }
+                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
+                return Ok(output);
             }
             else
             {
-                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
-                return BadRequest();
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
+                return NotFound();
             }
         }
 
         [HttpPut("{ID}")]
-        public IActionResult UpdateTempEmployee(int ID, string fname, string lname, int? dayrate, int? weeksworked)
+        public IActionResult UpdateTempEmployee(string ID, string? fname, string? lname, int? dayrate, int? weeksworked)
         {
             var read = _temp.Read(ID);
-            if (fname == null) { fname = read.FName; }
-            if (lname == null) { lname = read.LName; }
-            if (dayrate == null) { dayrate = read.DayRateint; }
-            if (weeksworked == null) { weeksworked = read.WeeksWorkedint; }
+            if (fname is null) { fname = read.FName; }
+            if (lname is null) { lname = read.LName; }
+            if (dayrate is null) { dayrate = read.DayRateint; }
+            if (weeksworked is null) { weeksworked = read.WeeksWorkedint; }
 
-            var response = _temp.Update(ID, fname, lname, dayrate, weeksworked);
-            if (response == null) {
+            int notnulldayrate = dayrate ?? read.DayRateint;
+            int notnullweeksworked = weeksworked ?? read.WeeksWorkedint;
+
+            var response = _temp.Update(ID, fname, lname, notnulldayrate, notnullweeksworked);
+            if (response is null) {
                 _log.Warn($"\nPUT: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
                 return NotFound();
             }
@@ -93,7 +88,7 @@ namespace PayCal_API.Controllers
         }
 
         [HttpDelete("{ID}")]
-        public IActionResult DeleteTempEmployee(int ID)
+        public IActionResult DeleteTempEmployee(string ID)
         {
             var delete = _temp.Delete(ID);
             if (delete) {

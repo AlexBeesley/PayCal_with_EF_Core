@@ -3,7 +3,7 @@ using PayCal.Logging;
 using log4net;
 using System.Reflection;
 
-namespace PayCal.Repositories
+namespace PayCal.Repositories.Volatile
 {
     public class TempEmployeeRepository : IRepository<TempEmployeeData>
     {
@@ -19,7 +19,7 @@ namespace PayCal.Repositories
         {
             new TempEmployeeData()
             {
-                EmployeeID = rnd.Next(1000,9999),
+                EmployeeID = rnd.Next(1000,9999).ToString(),
                 FName = "Clare",
                 LName = "Jones",
                 DayRateint = 350,
@@ -28,7 +28,7 @@ namespace PayCal.Repositories
             
             new TempEmployeeData()
             {
-                EmployeeID = rnd.Next(1000,9999),
+                EmployeeID = rnd.Next(1000,9999).ToString(),
                 FName = "Kate",
                 LName = "Rugby",
                 DayRateint = 240,
@@ -37,7 +37,7 @@ namespace PayCal.Repositories
             
             new TempEmployeeData()
             {
-                EmployeeID = rnd.Next(1000,9999),
+                EmployeeID = rnd.Next(1000,9999).ToString(),
                 FName = "Hassan",
                 LName = "Ahmad",
                 DayRateint = 120,
@@ -45,11 +45,11 @@ namespace PayCal.Repositories
             },
         };
 
-        public TempEmployeeData Create(string fname, string lname, int? DayRate, int? WeeksWorked)
+        public TempEmployeeData Create(string fname, string lname, int DayRate, int WeeksWorked)
         {
             var createTempEmployeeData = new TempEmployeeData()
             {
-                EmployeeID = rnd.Next(1000, 9999),
+                EmployeeID = rnd.Next(1000, 9999).ToString(),
                 FName = fname,
                 LName = lname,
                 DayRateint = DayRate,
@@ -66,13 +66,13 @@ namespace PayCal.Repositories
             return myTempEmployeeData;
         }
 
-        public int GetIDfromIndex(int employeeID)
+        public string GetID(string employeeID)
         {
-            _log.Debug($"\nID from index: {myTempEmployeeData[employeeID].EmployeeID}");
-            return myTempEmployeeData[employeeID].EmployeeID;
+            _log.Debug($"\nID from index: {myTempEmployeeData[Convert.ToInt32(employeeID)].EmployeeID}");
+            return myTempEmployeeData[Convert.ToInt32(employeeID)].EmployeeID;
         }
 
-        public TempEmployeeData Read(int employeeID)
+        public TempEmployeeData Read(string employeeID)
         {
             if (myTempEmployeeData.Any(e => e.EmployeeID == employeeID))
             {
@@ -92,7 +92,7 @@ namespace PayCal.Repositories
             return myTempEmployeeData.Count;
         }
 
-        public TempEmployeeData Update(int employeeID, string fname, string lname, int? DayRate, int? WeeksWorked)
+        public TempEmployeeData Update(string employeeID, string fname, string lname, int DayRate, int WeeksWorked)
         {
             if (myTempEmployeeData.Any(e => e.EmployeeID == employeeID))
             {
@@ -110,7 +110,7 @@ namespace PayCal.Repositories
             }
         }
 
-        public bool Delete(int employeeID)
+        public bool Delete(string employeeID)
         {
             if (myTempEmployeeData.Any(e => e.EmployeeID == employeeID))
             {

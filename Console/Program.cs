@@ -1,18 +1,34 @@
-﻿using PayCal.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using PayCal.DataAccess;
+using PayCal.Models;
 using PayCal.Repositories;
+using PayCal.Repositories.Persistent;
 using PayCal.Services;
 
 namespace PayCal_Console
 {
     class Program
     {
+        private static EmployeeContext? _context;
+
         static void Main(string[] args)
         {
-            IRepository<PermEmployeeData> perm = new PermEmployeeRepository();
-            IRepository<TempEmployeeData> temp = new TempEmployeeRepository();
+
+            Console.Title = "PayCal";
+
+            var services = new ServiceCollection();
+            services.AddDbContext<EmployeeContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Database=PayCalDB;Integrated Security=True;"));
+
+            var serviceProvider = services.BuildServiceProvider();
+            _context = serviceProvider.GetService<EmployeeContext>();
+
+            IRepository<PermEmployeeData> perm = new PermEmployeeRepository(_context);
+            IRepository<TempEmployeeData> temp = new TempEmployeeRepository(_context);
+            ICalculator cal = new Calculator(perm, temp);
+
             PermEmployeeData permED = new PermEmployeeData();
             TempEmployeeData tempED = new TempEmployeeData();
-            ICalculator cal = new Calculator(perm, temp);
 
             int Output;
             string[] Fields = { "Enter First Name:  ", "Enter Surname:  ", "Enter Salary (if applicable):  £", "Enter Bonus (if applicable):  £",
@@ -166,7 +182,7 @@ Pay Calculator -----------------------------------------------------------------
                         bool valid = int.TryParse(Input, out Output);
                         if (valid)
                         {
-                            int selectedID = Output;
+                            string selectedID = Output.ToString();
                             bool x = perm.Delete(selectedID);
                             if (!x)
                             {
@@ -188,30 +204,21 @@ Pay Calculator -----------------------------------------------------------------
                         Console.WriteLine("CALCULATE ANNUAL PAY\n");
                         Console.WriteLine($"{string.Concat(perm.ReadAll())}{string.Concat(temp.ReadAll())}");
                         Console.Write("\nSelect ID of Employee:  ");
-                        string? Input = Console.ReadLine();
-                        bool valid = int.TryParse(Input, out Output);
-                        if (valid)
-                        {
-                            int selectedID = Output;
-                            try
+                        string selectedID = Console.ReadLine();
+                        try
                             {
                                 Console.WriteLine("Employee Name:  " + perm.Read(selectedID).FName + " " + perm.Read(selectedID).LName);
                                 Console.WriteLine("Employment Type:  Permanent");
                                 Console.WriteLine("Gross Annual Pay:  £" + cal.CalculateEmployeePay(selectedID));
                                 Console.WriteLine("Annual Pay after Tax:  £" + cal.CalculateEmployeePay(selectedID));
                             }
-                            catch
+                        catch
                             {
                                 Console.WriteLine("Employee Name:  " + temp.Read(selectedID).FName + " " + temp.Read(selectedID).LName);
                                 Console.WriteLine("Employment Type:  Temporary");
                                 Console.WriteLine("Gross Annual Pay:  £" + cal.CalculateEmployeePay(selectedID));
                                 Console.WriteLine("Annual Pay after Tax:  £" + cal.CalculateEmployeePay(selectedID));
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invaild ID.");
-                        }
                         CalLoop = true;
                     }
                 }

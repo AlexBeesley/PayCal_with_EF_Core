@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "Temporary Employee";
 }
-<h2>Permanent Employee by ID</h2>
+<h2>Temporary Employee</h2>
 
-<div class="card" id="outputTablePerm">
+<div class="cardSingle" id="outputTablePerm">
     <table>
         <tr>
         <th>ID</th>
@@ -16,15 +16,13 @@
             <td>@Model.Employee.EmployeeID</td>
             <td>@Model.Employee.FName @Model.Employee.LName</td>
             <td>£@Model.Employee.DayRateint</td>
-            <td>£@Model.Employee.WeeksWorkedint</td>
+            <td>@Model.Employee.WeeksWorkedint</td>
         </tr>
     </table>
-</div><br>
+</div>
 
-<div class="column">
-    <div class="cards">
-        <a class="buttons" id="TempEmployeesBtn" asp-area="" asp-controller="Temp" asp-action="Employees">
-            <button id="back_btn">Back</button>
-        </a>
-    </div>
+<div class="cardsBackBtn">
+    <a class="buttons" id="TempEmployeesBtn" asp-area="" asp-controller="Temp" asp-action="Employees">
+        <button id="back_btn">Back</button>
+    </a>
 </div>

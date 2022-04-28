@@ -1,10 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using PayCal.DataAccess;
 using PayCal.Models;
 using PayCal.Repositories;
+using PayCal.Repositories.Persistent;
 using PayCal.Services;
 
 [assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
-//log4net.GlobalContext.Properties["LogFileName"] = @"C:\\file1";
-
 
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -16,19 +17,15 @@ builder.Services.AddSwaggerGen( c =>
     c.ResolveConflictingActions (apiDescriptions => apiDescriptions.First());
 });
 
-builder.Services.AddSingleton<IRepository<PermEmployeeData>, PermEmployeeRepository>();
-builder.Services.AddSingleton<IRepository<TempEmployeeData>, TempEmployeeRepository>();
-builder.Services.AddSingleton<ICalculator, Calculator>();
-
-builder.Services.AddCors(options =>
+builder.Services.AddDbContext<EmployeeContext>(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-        builder =>
-        {
-            // Replace path with one relavent to your machine in order to get the front end wwwroot site working.
-            builder.WithOrigins("file:///C:/Users/beesleyd/source/repos/PayCal%20API/wwwroot/index.html");
-        });
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
+
+builder.Services.AddScoped<IRepository<PermEmployeeData>, PermEmployeeRepository>();
+builder.Services.AddScoped<IRepository<TempEmployeeData>, TempEmployeeRepository>();
+builder.Services.AddScoped<ICalculator, Calculator>();
+
 
 var app = builder.Build();
 

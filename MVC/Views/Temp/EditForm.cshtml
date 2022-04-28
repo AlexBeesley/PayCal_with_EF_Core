@@ -1,0 +1,36 @@
+﻿@model PayCal_MVC.Models.TempViewModel
+@{
+    ViewData["Title"] = "Update Temporary Employee";
+}
+<h2>Update Temporary Employee</h2>
+
+<div class="cardSingle" id="outputTablePerm">
+    <table>
+        <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Day Rate</th>
+        <th>Weeks Worked</th>
+        </tr>
+        <tr>
+            <td>@Model.Employee.EmployeeID</td>
+            <td>@Model.Employee.FName @Model.Employee.LName</td>
+            <td>£@Model.Employee.DayRateint</td>
+            <td>@Model.Employee.WeeksWorkedint</td>
+        </tr>
+    </table>
+</div>
+
+<form id="Edit_form" asp-controller="Temp" asp-action="Edit" asp-route-id=@Model.Employee.EmployeeID method="post">
+    <input type="text" name="fname" pattern="[A-Za-z]+" placeholder="First Name"/>
+    <input type="text" name="lname" pattern="[A-Za-z]+" placeholder="Last Name"/>
+    <input type="number" name="dayrate" min="0" placeholder="Day Rate"/>
+    <input type="number" name="weeksworked" min="0" max="52" placeholder="Weeks Worked"/>
+    <input type="submit" value="Update"/>
+</form>
+
+<div class="cardsBackBtn">
+    <a class="buttons" id="TempEmployeesBtn" asp-area="" asp-controller="Temp" asp-action="Employees">
+        <button id="back_btn">Back</button>
+    </a>
+</div>

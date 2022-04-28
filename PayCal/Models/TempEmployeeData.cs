@@ -1,9 +1,11 @@
-﻿namespace PayCal.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PayCal.Models
 {
     public class TempEmployeeData : EmployeeData
     {
-        public int? DayRateint { get; set; }
-        public int? WeeksWorkedint { get; set; }
+        [Required] public int DayRateint { get; set; }
+        [Required] public int WeeksWorkedint { get; set; }
 
         public override string ToString()
         {

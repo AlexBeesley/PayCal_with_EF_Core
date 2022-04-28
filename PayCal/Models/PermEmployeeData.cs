@@ -1,9 +1,11 @@
-﻿namespace PayCal.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PayCal.Models
 {
     public class PermEmployeeData : EmployeeData
     {
-        public int? Salaryint { get; set; }
-        public int? Bonusint { get; set; }
+        [Required] public int Salaryint { get; set; }
+        [Required] public int Bonusint { get; set; }
 
         public override string ToString()
         {

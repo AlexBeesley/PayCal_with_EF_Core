@@ -1,81 +1,73 @@
 ﻿@model PayCal_MVC.Models.TempViewModel
 @{
     ViewData["Title"] = "Temporary Employees";
+    if (Model.Employees is null)
+    {
+        throw new Exception("Model.Employees for Temp is null");
+    }
+    var notnullEmployees = Model.Employees ?? new List<PayCal.Models.TempEmployeeData>();
 }
 
-<h2>Temporary Employee Management</h2>
+<h2 class="h2Index">Temporary Employee Management</h2>
+
+<form class="searchbox" role="search" asp-controller="Temp" asp-action="Search" asp-route-id="searchString" method="get">
+    <input required name="searchString" type="search" placeholder="Search..."/>
+    <button type="submit" value="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+</form>
 
 <div class="card" id="outputTableTemp">
-    <table>
-        <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Day Rate</th>
-        <th>Weeks Worked</th>
-        </tr>
-        @for(var i = 0; i < Model.Employees.Count; i++)
-        {<tr>
-            <td>@Model.Employees[i].EmployeeID</td>
-            <td>@Model.Employees[i].FName @Model.Employees[i].LName</td>
-            <td>£@Model.Employees[i].DayRateint</td>
-            <td>£@Model.Employees[i].WeeksWorkedint</td>
-        </tr>}
-    </table>
-</div><br>
+    @if (notnullEmployees.Count == 0)
+    {
+        <p>No Permanent Employees found</p>
+        <a asp-area="" asp-controller="Temp" asp-action="Employees">
+            Go Back
+        </a>
+    }
 
-<div class="column">
-    <div class="cards">
-        <button class="menubtn" id="GetEmployee_Btn" onclick="ShowMenu_GetEmployeeBtn()">Get Employee</button>
-    </div>
-    <form id="getbyID_form" asp-controller="Temp" asp-action="Employee" method="get">
-        <input type="number" name="id" size="4" min="0" placeholder="Employee ID" required/>
-        <input type="submit" value="Submit"/>
-    </form>
+    @if (notnullEmployees.Count > 0)
+    {
+            <table>
+            <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Day Rate</th>
+            <th>Weeks Worked</th>
+            </tr>
+            @foreach (var item in notnullEmployees)
+            {<tr>
+                <td>@item.EmployeeID</td>
+                <td>@item.FName @item.LName</td>
+                <td>£@item.DayRateint</td>
+                <td>@item.WeeksWorkedint</td>
+                            <td>
+                    <a asp-area="" asp-controller="Temp" asp-action="Employee" asp-route-id=@item.EmployeeID>
+                        <i class="fa-solid fa-user" alt="Get Employee" title="Get Employee"></i>
+                    </a>
+                </td>
+                <td>
+                    <a asp-area="" asp-controller="Temp" asp-action="PayCal" asp-route-id=@item.EmployeeID>
+                        <i class="fa-solid fa-calculator" alt="Calculate income after tax" title="Calculate income after tax"></i>
+                    </a>
+                </td>
+                <td>
+                    <a asp-area="" asp-controller="Temp" asp-action="EditForm" asp-route-id=@item.EmployeeID>
+                        <i class="fa-solid fa-pen" alt="Edit Employee" title="Edit Employee"></i>
+                    </a>
+                </td>
+                <td>
+                    <a asp-area="" asp-controller="Temp" asp-action="Delete" asp-route-id=@item.EmployeeID>
+                        <i class="fa-solid fa-trash" id="trashIcon" alt="Delete Employee" title="Delete Employee"></i>
+                    </a>
+                </td>
+            </tr>}
+        </table>
+    }
 </div>
 
 <div class="column">
-    <div class="cards">
-        <button class="menubtn" id="payCalculator_btn" onclick="ShowMenu_PayCalBtn()">Pay Calculator</button>
-    </div>
-    <form id="PayCal_form" asp-controller="Temp" asp-action="PayCal" method="get">
-        <input type="number" name="id" size="4" min="0" placeholder="Employee ID" required/>
-        <input type="submit" value="Submit"/>
-    </form>
-</div>
-
-<div class="column">
-    <div class="cards">
-        <button class="menubtn" id="addEmployee_btn" onclick="ShowMenu_AddEmployeeBtn()">Add Employee</button>
-    </div>
-    <form id="Create_form" asp-controller="Temp" asp-action="Create" method="post">
-        <input type="text" name="fname" pattern="[A-Za-z]+" placeholder="First Name" required/>
-        <input type="text" name="lname" pattern="[A-Za-z]+" placeholder="Last Name" required/>
-        <input type="number" name="dayrate" min="0" placeholder="Day Rate" required/>
-        <input type="number" name="weeksworked"min="0" placeholder="Weeks Worked" required/>
-        <input type="submit" value="Create"/>
-    </form>
-</div>
-
-<div class="column">
-    <div class="cards">
-        <button class="menubtn" id="editEmployee_btn" onclick="ShowMenu_EditEmployeeBtn()">Edit Employee</button>
-    </div>
-    <form id="Edit_form" asp-controller="Temp" asp-action="Edit" method="post">
-        <input type="number" name="id" size="4" min="0" placeholder="Employee ID" required/>
-        <input type="text" name="fname" pattern="[A-Za-z]+" placeholder="First Name"/>
-        <input type="text" name="lname" pattern="[A-Za-z]+" placeholder="Last Name"/>
-        <input type="number" name="dayrate" min="0" placeholder="Day Rate"/>
-        <input type="number" name="weeksworked" min="0" placeholder="Weeks Worked"/>
-        <input type="submit" value="Update"/>
-    </form>
-</div>
-
-<div class="column">
-    <div class="cards">
-        <button class="menubtn" id="GetEmployee_Btn" onclick="ShowMenu_DeleteEmployeeBtn()">Delete Employee</button>
-    </div>
-    <form id="Delete_form" asp-controller="Temp" asp-action="Delete" method="post">
-        <input type="number" name="id" size="4" min="0" placeholder="Employee ID" required/>
-        <input type="submit" value="Submit"/>
-    </form>
+    <a asp-area="" asp-controller="Temp" asp-action="CreateForm">
+        <div class="cards">
+            <button class="menubtn" id="addEmployee_btn" onclick="ShowMenu_AddEmployeeBtn()">Add Employee</button>
+        </div>
+    </a>
 </div>

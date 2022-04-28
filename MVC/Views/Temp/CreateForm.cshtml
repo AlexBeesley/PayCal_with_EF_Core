@@ -1,0 +1,19 @@
+﻿@model PayCal_MVC.Models.TempViewModel
+@{
+    ViewData["Title"] = "Create Temporary Employee";
+}
+<h2>Create Temporary Employee</h2>
+
+    <form id="Create_form" asp-controller="Temp" asp-action="Create" method="post">
+        <input type="text" name="fname" pattern="[A-Za-z]+" placeholder="First Name" required/>
+        <input type="text" name="lname" pattern="[A-Za-z]+" placeholder="Last Name" required/>
+        <input type="number" name="dayrate" min="0" placeholder="Day Rate" required/>
+        <input type="number" name="weeksworked"min="0" max="52" placeholder="Weeks Worked" required/>
+        <input type="submit" value="Create"/>
+    </form>
+
+<div class="cardsBackBtn">
+    <a class="buttons" id="TempEmployeesBtn" asp-area="" asp-controller="Temp" asp-action="Employees">
+        <button id="back_btn">Back</button>
+    </a>
+</div>

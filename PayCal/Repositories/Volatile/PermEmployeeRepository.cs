@@ -3,9 +3,7 @@ using PayCal.Logging;
 using log4net;
 using System.Reflection;
 
-[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
-
-namespace PayCal.Repositories
+namespace PayCal.Repositories.Volatile
 {
     public class PermEmployeeRepository : IRepository<PermEmployeeData>
     {
@@ -21,7 +19,7 @@ namespace PayCal.Repositories
         {
             new PermEmployeeData()
             {
-                EmployeeID = rnd.Next(1000,9999),
+                EmployeeID = rnd.Next(1000,9999).ToString(),
                 FName = "Joe",
                 LName = "Bloggs",
                 Salaryint = 40000,
@@ -30,7 +28,7 @@ namespace PayCal.Repositories
 
             new PermEmployeeData()
             {
-                EmployeeID = rnd.Next(1000,9999),
+                EmployeeID = rnd.Next(1000,9999).ToString(),
                 FName = "John",
                 LName = "Smith",
                 Salaryint = 45000,
@@ -39,7 +37,7 @@ namespace PayCal.Repositories
             
             new PermEmployeeData()
             {
-                EmployeeID = rnd.Next(1000,9999),
+                EmployeeID = rnd.Next(1000,9999).ToString(),
                 FName = "Harry",
                 LName = "Potter",
                 Salaryint = 23000,
@@ -48,7 +46,7 @@ namespace PayCal.Repositories
             
             new PermEmployeeData()
             {
-                EmployeeID = rnd.Next(1000,9999),
+                EmployeeID = rnd.Next(1000,9999).ToString(),
                 FName = "Jane",
                 LName = "Doe",
                 Salaryint = 48000,
@@ -57,7 +55,7 @@ namespace PayCal.Repositories
             
             new PermEmployeeData()
             {
-                EmployeeID = rnd.Next(1000,9999),
+                EmployeeID = rnd.Next(1000,9999).ToString(),
                 FName = "James",
                 LName = "Bond",
                 Salaryint = 67000,
@@ -65,11 +63,11 @@ namespace PayCal.Repositories
             }
         };
 
-        public PermEmployeeData Create(string fname, string lname, int? Salary, int? Bonus)
+        public PermEmployeeData Create(string fname, string lname, int Salary, int Bonus)
         {
             var createPermEmployeeData = new PermEmployeeData()
             {
-                EmployeeID = rnd.Next(1000, 9999),
+                EmployeeID = rnd.Next(1000, 9999).ToString(),
                 FName = fname,
                 LName = lname,
                 Salaryint = Salary,
@@ -86,13 +84,13 @@ namespace PayCal.Repositories
             return (myPermEmployeeData);
         }
 
-        public int GetIDfromIndex(int employeeID)
+        public string GetID(string employeeID)
         {
-            _log.Debug($"\nID from index: {myPermEmployeeData[employeeID].EmployeeID}");
-            return myPermEmployeeData[employeeID].EmployeeID;
+            _log.Debug($"\nID from index: {myPermEmployeeData[Convert.ToInt32(employeeID)].EmployeeID}");
+            return myPermEmployeeData[Convert.ToInt32(employeeID)].EmployeeID;
         }
 
-        public PermEmployeeData Read(int employeeID)
+        public PermEmployeeData Read(string employeeID)
         {
             if (myPermEmployeeData.Any(e => e.EmployeeID == employeeID))
             {
@@ -112,7 +110,7 @@ namespace PayCal.Repositories
             return myPermEmployeeData.Count;
         }
 
-        public PermEmployeeData Update(int employeeID, string fname, string lname, int? Salary, int? Bonus)
+        public PermEmployeeData Update(string employeeID, string fname, string lname, int Salary, int Bonus)
         {
             if (myPermEmployeeData.Any(e => e.EmployeeID == employeeID))
             {
@@ -130,7 +128,7 @@ namespace PayCal.Repositories
             }
         }
 
-        public bool Delete(int employeeID)
+        public bool Delete(string employeeID)
         {
             if (myPermEmployeeData.Any(e => e.EmployeeID == employeeID))
             {

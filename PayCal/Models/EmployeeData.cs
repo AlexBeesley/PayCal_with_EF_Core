@@ -1,12 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PayCal.Models
 {
     public abstract class EmployeeData
     {
-        public int EmployeeID { get; set; }
+        [Key]
         [Required]
-        public string? FName { get; set; }
-        public string? LName { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string EmployeeID { get; set; }
+
+        [Required] public string FName { get; set; }
+
+        [Required] public string LName { get; set; }
     }
 }

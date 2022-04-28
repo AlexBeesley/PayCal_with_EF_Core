@@ -1,16 +1,16 @@
 ﻿using NUnit.Framework;
 using PayCal.Models;
 
-namespace PayCal___Tests
+namespace PayCal_Tests
 {
     [TestFixture]
-    public class TempEmployeeDataShould
+    public class PermEmployeeDataShould
     {
         [Test]
         public void Check_FName_is_null()
         {
             // Arrange
-            var sut = new TempEmployeeData();
+            var sut = new PermEmployeeData();
 
             // Act + Assert
             Assert.Null(sut.FName);
@@ -20,30 +20,30 @@ namespace PayCal___Tests
         public void Check_LName_is_null()
         {
             // Arrange
-            var sut = new TempEmployeeData();
+            var sut = new PermEmployeeData();
 
             // Act + Assert
             Assert.Null(sut.LName);
         }
 
         [Test]
-        public void Check_DayRateint_is_null()
+        public void Check_Salaryint_is_zero()
         {
             // Arrange
-            var sut = new TempEmployeeData();
+            var sut = new PermEmployeeData();
 
             // Act + Assert
-            Assert.Null(sut.DayRateint);
+            Assert.AreEqual(sut.Salaryint, 0);
         }
 
         [Test]
-        public void Check_WeeksWorkedint_is_null()
+        public void Check_Bonusint_is_zero()
         {
             // Arrange
-            var sut = new TempEmployeeData();
+            var sut = new PermEmployeeData();
 
             // Act + Assert
-            Assert.Null(sut.WeeksWorkedint);
+            Assert.AreEqual(sut.Bonusint, 0);
         }
 
         [Test]

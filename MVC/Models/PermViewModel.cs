@@ -10,7 +10,7 @@ namespace PayCal_MVC.Models
         public double? PayCalculated { get; set; }
         public PermEmployeeData? Created { get; set; }
         public PermEmployeeData? Updated { get; set; }
-        public int? DeletedID { get; set; }
+        public string? DeletedID { get; set; }
         public PermEmployeeData? Deleted { get; set; }
     }
 }

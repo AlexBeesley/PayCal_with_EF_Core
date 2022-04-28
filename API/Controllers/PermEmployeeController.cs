@@ -23,12 +23,11 @@ namespace PayCal_API.Controllers
             _cal = cal;
         }
 
-
         [HttpGet()]
         public IActionResult GetAllPermEmployees()
         {
             var response = _perm.ReadAll();
-            if (response == null) {
+            if (response is null) {
                 _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http204}\n{LogStrings.context204}");
                 return NoContent();
             }
@@ -39,42 +38,37 @@ namespace PayCal_API.Controllers
         }
 
         [HttpGet("{ID}")]
-        public IActionResult GetPermEmployeeByID(int ID)
+        public IActionResult GetPermEmployeeByID(string ID)
         {
-            if (ID.ToString().Length == 4)
+            var read = _perm.Read(ID);
+            if (read != null)
             {
-                var read = _perm.Read(ID);
-                double pay = _cal.CalculateEmployeePay(ID);
+                double? pay = _cal.CalculateEmployeePay(read.EmployeeID);
                 var output = Json(pay, read);
-                if (read != null)
-                {
-                    _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
-                    return Ok(output);
-                }
-                else
-                {
-                    _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
-                    return NotFound();
-                }
+                _log.Warn($"\nGET: {LogStrings.defaultmsg} {LogStrings.http200}");
+                return Ok(output);
             }
             else
             {
-                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
-                return BadRequest();
+                _log.Info($"\nGET: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
+                return NotFound();
             }
         }
 
         [HttpPut("{ID}")]
-        public IActionResult UpdatePermEmployee(int ID, string? fname, string? lname, int? salary, int? bonus)
+        public IActionResult UpdatePermEmployee(string ID, string? fname, string? lname, int? salary, int? bonus)
         {
             var read = _perm.Read(ID);
-            if (fname == null) { fname = read.FName;  }
-            if (lname == null) { lname = read.LName; }
-            if (salary == null) { salary = read.Salaryint;  }
-            if (bonus == null) { bonus = read.Bonusint; }
+            if (fname is null) { fname = read.FName;  }
+            if (lname is null) { lname = read.LName; }
+            if (salary is null) { salary = read.Salaryint;  }
+            if (bonus is null) { bonus = read.Bonusint; }
 
-            var response =  _perm.Update(ID, fname, lname, salary, bonus);
-            if (response == null) {
+            int notnullsalary = salary ?? read.Salaryint;
+            int notnullbonus = bonus ?? read.Bonusint;
+
+            var response =  _perm.Update(ID, fname, lname, notnullsalary, notnullbonus);
+            if (response is null) {
                 _log.Warn($"\nPUT: {LogStrings.defaultmsg} {LogStrings.http404}\n{LogStrings.context404}");
                 return NotFound();
             }
@@ -94,26 +88,18 @@ namespace PayCal_API.Controllers
         }
 
         [HttpDelete("{ID}")]
-        public IActionResult DeletePermEmployee(int ID)
+        public IActionResult DeletePermEmployee(string ID)
         {
-            if (ID.ToString().Length == 4)
+            var delete = _perm.Delete(ID);
+            if (delete)
             {
-                var delete = _perm.Delete(ID);
-                if (delete)
-                {
-                    _log.Info($"\nDELETE: {LogStrings.defaultmsg} {LogStrings.http200}");
-                    return Ok();
-                }
-                else
-                {
-                    _log.Warn($"\nDELETE: {LogStrings.errormsg}\n{LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
-                    return NotFound();
-                }
+                _log.Info($"\nDELETE: {LogStrings.defaultmsg} {LogStrings.http200}");
+                return Ok();
             }
             else
             {
-                _log.Info($"\nDELETE: {LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
-                return BadRequest();
+                _log.Warn($"\nDELETE: {LogStrings.errormsg}\n{LogStrings.defaultmsg} {LogStrings.http400}\n{LogStrings.context400}");
+                return NotFound();
             }
         }
     }
