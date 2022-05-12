@@ -36,7 +36,8 @@ namespace PayCal.Repositories.Persistent
         {
             if (_db.tempEmployeeDatas.Count() == 0)
             {
-                string file = System.IO.File.ReadAllText("C:/Users/beesleyd/Source/Repos/PayCalculator/PayCal/TempMockData.json");
+                string path = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName, @"PayCal\", "TempMockData.json");
+                string file = System.IO.File.ReadAllText(path);
                 var employeeData = JsonSerializer.Deserialize<List<TempEmployeeData>>(file);
                 _db.tempEmployeeDatas.AddRange(employeeData);
                 _db.SaveChanges();
